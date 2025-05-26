@@ -1,0 +1,29 @@
+<div class="exercise-container" *ngIf="ejercicio">
+  <!-- Mensaje de felicitación -->
+  <div class="felicitacion-overlay" *ngIf="mostrarFelicitacion">
+    <div class="felicitacion-mensaje">
+      <h2>¡Excelente trabajo! 🎉</h2>
+      <p>¡Has completado este ejercicio!</p>
+    </div>
+  </div>
+  <div class="exercise-text">
+    {{ ejercicio.pregunta }}
+  </div>
+
+  <!-- Mostrar imagen si está disponible -->
+  <div class="exercise-image" *ngIf="ejercicio.fotoUrl">
+    <img [src]="ejercicio.fotoUrl" [alt]="'Imagen del ejercicio ' + ejercicio.id" class="exercise-img" />
+  </div>
+  <div class="exercise-actions">
+    <button (click)="completarEjercicio()" [disabled]="mostrarFelicitacion">Completado</button>
+    <button (click)="nuevoEjercicio()" [disabled]="mostrarFelicitacion">Nuevo Ejercicio</button>
+    <button (click)="toggleRespuesta()" [disabled]="mostrarFelicitacion">{{ mostrarRespuesta ? 'Ocultar' : 'Mostrar' }} Respuesta</button>
+  </div>
+  <div class="exercise-answer" *ngIf="mostrarRespuesta">
+    <strong>Respuesta:</strong>
+    <div class="answer-content">{{ ejercicio.respuesta }}</div>
+  </div>
+</div>
+<div *ngIf="!ejercicio" class="no-exercise">
+  No hay ejercicios disponibles para este tema.
+</div>
