@@ -1,0 +1,23 @@
+- Se crearon los modelos TypeScript en la carpeta interfaces para Usuario, Tema, Pregunta, Respuesta, Dashboard, PreguntaAleatoriaPublica y ApiError, siguiendo los modelos de Mongoose y los ejemplos de types.md.
+- Se crearon los servicios Angular en la carpeta services: CRUDService base, UsuarioService, TemaService, PreguntaService, RespuestaService, DashboardService y AuthService. Los servicios de Tema, Pregunta y Respuesta soportan subida de imágenes (FormData) en create/update.
+- Los servicios y modelos están alineados con la estructura y endpoints del backend, incluyendo endpoints especiales de dashboard y pregunta aleatoria pública.
+- Se actualizaron los servicios para que utilicen las interfaces TypeScript correspondientes en vez de any.
+- Se mejoró el AuthService agregando métodos útiles para el frontend: saveUser, getUser, isLoggedIn, getUserRole y logout, que permiten gestionar el usuario autenticado y la sesión de manera sencilla.
+- Ahora el frontend puede acceder fácilmente al token, usuario, rol y estado de sesión desde el AuthService.
+- Se componetizó la navbar y se mejoró el estilo del título FyEvP.
+- El menú lateral ahora es dinámico, muestra "Gestionar {colección}" y resalta "Gestionar Usuarios" si el usuario es Admin.
+- Se corrigió el uso de [routerLink] en el menú lateral para navegación funcional.
+- Se centralizó la lógica de roles (Admin, Colaborador) en AuthService y se usa en AppComponent.
+- Se agregó separación y estilos modernos a la navbar y menú lateral usando Angular Material.
+- Se proveyó HttpClient en app.config.ts para habilitar servicios HTTP en Angular standalone.
+- Se implementó layout responsive con Angular Material y BreakpointObserver.
+- Se mejoró la experiencia visual y de navegación para todos los roles.
+- Se reestructuró el LoginComponent para usar Angular Material, con diseño moderno y responsive.
+- Todos los servicios (AuthService, CRUDService, UsuarioService, TemaService, PreguntaService, RespuestaService, DashboardService) ahora usan environment.API_URL para las peticiones HTTP.
+- Se crearon rutas hijas para admin y modules, y se configuró lazy loading en app.routes.ts.
+- Se implementaron guards para roles (adminOnlyGuard, adminOrColaboradorGuard) y autenticación.
+- Se crearon componentes page para cada entidad bajo admin y modules, siguiendo la estructura solicitada.
+- El layout principal y la navbar ahora son completamente responsive, con iconos en móvil y botones en escritorio.
+- El botón de login/cerrar sesión en la navbar depende del estado de autenticación y usa AuthService.
+- El resaltado de la ruta activa en la sidenav ahora funciona correctamente y es visualmente claro.
+- Mejoras visuales y de UX en la navegación y estructura general del frontend.

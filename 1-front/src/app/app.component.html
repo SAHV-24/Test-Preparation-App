@@ -1,0 +1,34 @@
+<mat-sidenav-container class="sidenav-container" autosize>
+  <mat-sidenav
+    #drawer
+    mode="side"
+    class="sidenav"
+    fixedInViewport
+    [opened]="isDesktop && isAdminOrColaborador"
+    [mode]="isDesktop ? 'side' : 'over'"
+    (closedStart)="drawerOpened = false"
+    (openedStart)="drawerOpened = true"
+  >
+    <mat-toolbar color="primary">Menú</mat-toolbar>
+    <mat-nav-list>
+      <a *ngFor="let item of sidenavItems"
+         mat-list-item
+         [routerLink]="item.link"
+         [class.active-link]="isActive(item.link)"
+         [class.admin-item]="item.color === 'primary'">
+        {{ item.label }}
+      </a>
+    </mat-nav-list>
+  </mat-sidenav>
+
+  <mat-sidenav-content>
+    <app-navbar
+      [drawer]="drawer"
+      [showToggle]="isAdminOrColaborador"
+      [navItems]="navItems"
+    ></app-navbar>
+    <main class="main-content">
+      <router-outlet></router-outlet>
+    </main>
+  </mat-sidenav-content>
+</mat-sidenav-container>

@@ -1,0 +1,138 @@
+.navbar {
+  flex-wrap: wrap;
+  min-height: 56px;
+  display: flex; /* Asegura flexbox para la toolbar */
+  align-items: center; /* Alinea los ítems verticalmente */
+}
+
+.navbar-title.special-title {
+  font-family: 'Cascadia Code', 'Fira Mono', 'Consolas', monospace;
+  font-size: 1.5rem;
+  font-weight: bold;
+  letter-spacing: 2px;
+  color: var(--mat-accent, #ff4081); /* Asumiendo que tu tema de Material define --mat-accent */
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.08);
+  margin-left: 24px;
+  /* margin-right: 32px; Se ajustará con el spacer */
+}
+
+.spacer {
+  flex: 1 1 auto; /* Empuja los elementos a los lados */
+}
+
+.nav-buttons-container {
+  display: flex;
+  align-items: center;
+  /* Los márgenes de los botones individuales se manejan dentro de esta clase */
+}
+
+/* Estilos para botones de escritorio */
+.nav-buttons-container button[mat-button],
+.nav-buttons-container a[mat-button] {
+  margin: 0 8px; /* Espacio uniforme entre botones de texto */
+}
+
+.nav-buttons-container button[mat-raised-button] {
+  margin-left: 16px; /* Un poco más de espacio para botones de acción */
+}
+
+/* Ocultar el botón del menú del drawer en escritorio */
+.hide-on-desktop {
+  display: none;
+}
+
+
+/* MEDIAS QUERIES PARA RESPONSIVE */
+
+/* Tablet y Escritorio pequeño */
+@media (max-width: 900px) {
+  .navbar-title.special-title {
+    margin-left: 8px;
+    font-size: 1.2rem;
+  }
+  .nav-buttons-container button[mat-button],
+  .nav-buttons-container a[mat-button],
+  .nav-buttons-container button[mat-raised-button] {
+    margin: 0 4px; /* Reducir márgenes en pantallas más pequeñas */
+    font-size: 0.9rem;
+  }
+}
+
+/* Mobile (hasta 600px de ancho) */
+@media (max-width: 600px) {
+  .navbar {
+    padding: 0 8px; /* Pequeño padding lateral */
+    justify-content: space-between; /* Distribuye el espacio entre FyEvP y los iconos */
+    min-height: 48px; /* Ajuste de altura para mobile */
+  }
+
+  .navbar-title.special-title {
+    font-size: 1.8rem; /* Tamaño más grande para FyEvP */
+    margin-left: 0;
+    margin-right: auto; /* Permite que el título se mantenga a la izquierda del spacer */
+    order: 1; /* Ordena el título primero */
+  }
+
+  .spacer {
+    flex-grow: 1; /* El spacer sigue empujando */
+    order: 2; /* Ordena el spacer segundo */
+  }
+
+  .nav-buttons-container {
+    order: 3; /* Ordena los botones al final */
+    display: flex;
+    align-items: center;
+    justify-content: center; /* Centra los iconos si hay espacio */
+    margin-right: 0;
+  }
+
+  /* Mostrar el botón del menú del drawer en mobile */
+  .hide-on-desktop {
+    display: block; /* Muestra el botón de menú */
+    order: 0; /* Asegura que el botón del menú vaya al principio */
+    margin-right: 8px; /* Espacio entre el botón de menú y el título */
+  }
+
+
+  .nav-buttons-container button[mat-icon-button] {
+    min-width: 40px;
+    width: 40px;
+    height: 40px;
+    margin: 0 4px; /* Espacio entre botones de íconos */
+    background: none;
+    border-radius: 50%;
+    color: var(--mat-toolbar-text-color); /* Color de los iconos según el tema */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+  }
+
+  .mat-icon {
+    font-size: 1.6rem; /* Ajuste para el tamaño de los íconos */
+    height: 1.6rem;
+    width: 1.6rem;
+    line-height: 1;
+  }
+}
+
+/* Mobile muy pequeño (hasta 400px de ancho) */
+@media (max-width: 400px) {
+  .navbar-title.special-title {
+    font-size: 1.5rem;
+  }
+  .hide-on-desktop {
+    margin-right: 4px; /* Ajuste para pantallas muy pequeñas */
+  }
+  .nav-buttons-container button[mat-icon-button] {
+    min-width: 36px;
+    width: 36px;
+    height: 36px;
+    margin: 0 2px;
+  }
+  .mat-icon {
+    font-size: 1.4rem;
+    height: 1.4rem;
+    width: 1.4rem;
+  }
+}

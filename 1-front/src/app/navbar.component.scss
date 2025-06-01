@@ -1,0 +1,73 @@
+.navbar-title.special-title {
+  font-family: 'Cascadia Code', 'Fira Mono', 'Consolas', monospace;
+  font-size: 1.5rem;
+  font-weight: bold;
+  letter-spacing: 2px;
+  color: var(--mat-accent, #ff4081);
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.08);
+  margin-left: 24px;
+  margin-right: 32px;
+}
+
+nav {
+  display: flex;
+  align-items: center;
+}
+
+nav button[mat-button],
+nav a[mat-button] {
+  margin-right: 16px;
+  margin-left: 8px;
+}
+
+nav button[mat-raised-button] {
+  margin-left: 24px;
+}
+
+.spacer {
+  flex: 1 1 auto;
+}
+
+@media (max-width: 900px) {
+  .navbar-title.special-title {
+    margin-left: 8px;
+    margin-right: 8px;
+    font-size: 1.1rem;
+  }
+  nav button[mat-button], nav a[mat-button] {
+    margin-right: 4px;
+    margin-left: 2px;
+    font-size: 0.95rem;
+  }
+  nav button[mat-raised-button] {
+    margin-left: 8px;
+    font-size: 0.95rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .navbar-title.special-title {
+    margin-left: 0;
+    margin-right: 0;
+    font-size: 1rem;
+  }
+  nav {
+    flex-direction: column;
+    align-items: flex-end;
+    width: 100%;
+  }
+  nav button[mat-button], nav a[mat-button], nav button[mat-raised-button] {
+    margin: 2px 0;
+    width: 100%;
+    min-width: 0;
+    font-size: 0.95rem;
+  }
+  .spacer {
+    display: none;
+  }
+}
+
+.navbar {
+  flex-wrap: wrap;
+  min-height: 56px;
+}
