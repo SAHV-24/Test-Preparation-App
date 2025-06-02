@@ -1,0 +1,36 @@
+:host {
+  display: block;
+}
+
+.tema-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-height: 70vh;
+  overflow-y: auto;
+  padding: 16px 8px 0 8px;
+}
+
+.full-width {
+  width: 100%;
+  padding: 0 2px;
+}
+
+mat-form-field.full-width {
+  margin-bottom: 0;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 18px;
+  padding-bottom: 8px;
+  padding-right: 4px;
+}
+
+h2[mat-dialog-title] {
+  padding: 16px 16px 0 16px;
+  margin-bottom: 0;
+  font-size: 1.25rem;
+}

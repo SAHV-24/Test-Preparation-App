@@ -11,6 +11,9 @@ import { AuthService } from './services/auth.service';
 import { NavbarComponent } from './shared/navbar/navbar.component';
 import { CommonModule, NgForOf, NgIf } from '@angular/common';
 import { Router } from '@angular/router';
+import { MatLabel } from '@angular/material/form-field';
+import { Usuario } from './interfaces/usuario.interface';
+import { UsuarioAuth } from './interfaces/usuario-auth.interface';
 
 @Component({
   selector: 'app-root',
@@ -18,6 +21,7 @@ import { Router } from '@angular/router';
     RouterOutlet,
     MatSlideToggleModule,
     MatSidenavModule,
+    MatLabel,
     CommonModule,
     MatToolbarModule,
     MatIconModule,
@@ -37,6 +41,7 @@ export class AppComponent implements OnInit {
     { label: 'Temas y Presentaciones', link: '/temas' },
     { label: 'Preguntas', link: '/preguntas' },
   ];
+  user: UsuarioAuth | null = null;
 
   constructor(
     private breakpointObserver: BreakpointObserver,
@@ -51,6 +56,8 @@ export class AppComponent implements OnInit {
         this.isDesktop = result.matches;
         this.drawerOpened = this.isDesktop;
       });
+
+    this.user = this.authService.getUser();
   }
 
   get isAdminOrColaborador(): boolean {
@@ -62,17 +69,24 @@ export class AppComponent implements OnInit {
   }
 
   isActive(link: string): boolean {
-    return this.router.isActive(link, { paths: 'exact', queryParams: 'ignored', fragment: 'ignored', matrixParams: 'ignored' });
+    return this.router.isActive(link, {
+      paths: 'exact',
+      queryParams: 'ignored',
+      fragment: 'ignored',
+      matrixParams: 'ignored',
+    });
   }
 
   get sidenavItems() {
     const items = [
       ...(this.isAdmin
-        ? [{ label: 'Gestionar Usuarios', link: '/admin/usuarios', color: 'primary' }]
+        ? [
+          { label: 'Dashboard', link: '/admin/dashboard',  },
+            { label: 'Usuarios', link: '/admin/usuarios', color: 'secondary' },
+          ]
         : []),
-      { label: 'Gestionar Temas', link: '/admin/temas' },
-      { label: 'Gestionar Presentaciones', link: '/admin/presentaciones' },
-      { label: 'Gestionar Preguntas', link: '/admin/preguntas' },
+      { label: 'Temas', link: '/admin/temas' },
+      { label: 'Preguntas', link: '/admin/preguntas' },
     ];
     return items;
   }

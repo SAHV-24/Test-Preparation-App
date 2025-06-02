@@ -1,0 +1,38 @@
+<h2 mat-dialog-title>{{ modoEdicion ? 'Editar Pregunta' : 'Crear Pregunta' }}</h2>
+<form [formGroup]="form" (ngSubmit)="guardar()" class="pregunta-form">
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>Enunciado</mat-label>
+    <textarea matInput formControlName="enunciado" rows="3" required maxlength="300"></textarea>
+    <mat-error *ngIf="form.get('enunciado')?.hasError('required')">El enunciado es obligatorio</mat-error>
+    <mat-error *ngIf="form.get('enunciado')?.hasError('maxlength')">Máximo 300 caracteres</mat-error>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>Estado</mat-label>
+    <mat-select formControlName="estado" required>
+      <mat-option value="Activo">Activo</mat-option>
+      <mat-option value="Inactivo">Inactivo</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <div class="file-upload-row">
+    <label class="file-label">
+      <mat-icon>image</mat-icon> Subir imagen (opcional)
+      <input type="file" accept="image/*" (change)="onFileSelected($event)" />
+    </label>
+    <div *ngIf="imagePreview" class="image-preview">
+      <img [src]="imagePreview" alt="Vista previa imagen" />
+      <button mat-icon-button color="warn" type="button" (click)="eliminarImagen()" matTooltip="Eliminar imagen">
+        <mat-icon>delete</mat-icon>
+      </button>
+    </div>
+    <div class="file-hint">No es necesario subir una imagen para la pregunta.</div>
+  </div>
+
+  <div class="modal-actions">
+    <button mat-button type="button" (click)="cancelar()">Cancelar</button>
+    <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid">
+      {{ modoEdicion ? 'Actualizar' : 'Guardar' }}
+    </button>
+  </div>
+</form>

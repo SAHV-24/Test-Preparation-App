@@ -40,15 +40,11 @@ const upload = multer({ dest: 'uploads/' });
  *                 type: string
  *               idTema:
  *                 type: string
- *               dificultad:
- *                 type: string
- *                 enum: [baja, media, alta]
+
  *               estado:
  *                 type: string
  *                 enum: [Activo, Inactivo]
- *               tipoPregunta:
- *                 type: string
- *                 enum: [MultipleChoice, TrueFalse]
+
  *               fotoUri:
  *                 type: string
  *                 format: binary
@@ -99,15 +95,11 @@ const upload = multer({ dest: 'uploads/' });
  *                 type: string
  *               idTema:
  *                 type: string
- *               dificultad:
- *                 type: string
- *                 enum: [baja, media, alta]
+
  *               estado:
  *                 type: string
  *                 enum: [Activo, Inactivo]
- *               tipoPregunta:
- *                 type: string
- *                 enum: [MultipleChoice, TrueFalse]
+
  *               fotoUri:
  *                 type: string
  *                 format: binary
@@ -164,11 +156,7 @@ const upload = multer({ dest: 'uploads/' });
  *       required:
  *         - enunciado
  *         - idTema
- *         - dificultad
- *         - estado
- *         - tipoPregunta
- *       properties:
- *         _id:
+ 
  *           type: string
  *           description: ID autogenerado por MongoDB
  *         enunciado:
@@ -176,15 +164,11 @@ const upload = multer({ dest: 'uploads/' });
  *         idTema:
  *           type: string
  *           description: ID del tema relacionado
- *         dificultad:
- *           type: string
- *           enum: [baja, media, alta]
+
  *         estado:
  *           type: string
  *           enum: [Activo, Inactivo]
- *         tipoPregunta:
- *           type: string
- *           enum: [MultipleChoice, TrueFalse]
+
  *         fotoUri:
  *           type: string
  *         idUsuario:
@@ -193,10 +177,7 @@ const upload = multer({ dest: 'uploads/' });
  *       example:
  *         enunciado: "¿Cuál es la capital de Francia?"
  *         idTema: "665f1b..."
- *         dificultad: "baja"
- *         estado: "Activo"
- *         tipoPregunta: "MultipleChoice"
- *         fotoUri: "https://..."
+: "https://..."
  *         idUsuario: "665f1b..."
  */
 
@@ -206,9 +187,12 @@ router.use(authMiddleware);
 // CRUD de preguntas (Admin o Colaborador)
 router.get('/', preguntaController.getPreguntas);
 router.get('/:id', preguntaController.getPreguntaById);
-router.post('/', isColaboradorOrAdmin, checkPreguntaActiva, upload.single('fotoUri'), preguntaController.createPregunta);
-router.put('/:id', isColaboradorOrAdmin, checkPreguntaActiva, upload.single('fotoUri'), preguntaController.updatePregunta);
+router.post('/', isColaboradorOrAdmin, upload.single('foto'), preguntaController.createPregunta);
+router.put('/:id', isColaboradorOrAdmin, checkPreguntaActiva, upload.single('foto'), preguntaController.updatePregunta);
 router.delete('/:id', isColaboradorOrAdmin, preguntaController.deletePregunta);
+
+// Obtener preguntas por idTema
+router.get('/tema/:idTema', preguntaController.getPreguntasPorTema);
 
 // Endpoint público para preguntas aleatorias de un tema (con respuestas)
 router.get('/public/random/:idTema', async (req, res) => {

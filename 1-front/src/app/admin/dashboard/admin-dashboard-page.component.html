@@ -1,0 +1,41 @@
+<div class="dashboard-container" *ngIf="isLoading; else content">
+  <mat-spinner></mat-spinner>
+</div>
+
+<ng-template #content>
+  <div class="dashboard-container" *ngIf="!error; else errorTemplate">
+    <h1 class="dashboard-title">Dashboard del Administrador</h1>
+    <div class="stats">
+      <mat-card class="stat-card">
+        <mat-icon class="stat-icon" color="primary">group</mat-icon>
+        <mat-card-title>Colaboradores</mat-card-title>
+        <mat-card-content>
+          <p>Total: {{ stats?.totalColaboradores }}</p>
+        </mat-card-content>
+      </mat-card>
+
+      <mat-card class="stat-card">
+        <mat-icon class="stat-icon" color="accent">category</mat-icon>
+        <mat-card-title>Temas</mat-card-title>
+        <mat-card-content>
+          <p>Total: {{ stats?.totalTemas }}</p>
+        </mat-card-content>
+      </mat-card>
+
+      <mat-card class="stat-card">
+        <mat-icon class="stat-icon" color="warn">help</mat-icon>
+        <mat-card-title>Preguntas</mat-card-title>
+        <mat-card-content>
+          <p>Total: {{ stats?.totalPreguntas }}</p>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #errorTemplate>
+  <div class="error-message">
+    <mat-icon color="warn">error</mat-icon>
+    <p>{{ error }}</p>
+  </div>
+</ng-template>

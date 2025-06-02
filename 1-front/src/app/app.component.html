@@ -4,18 +4,27 @@
     mode="side"
     class="sidenav"
     fixedInViewport
-    [opened]="isDesktop && isAdminOrColaborador"
     [mode]="isDesktop ? 'side' : 'over'"
     (closedStart)="drawerOpened = false"
     (openedStart)="drawerOpened = true"
   >
-    <mat-toolbar color="primary">Menú</mat-toolbar>
+    <mat-toolbar color="primary">
+      <mat-icon aria-hidden="false" aria-label="" fontIcon="person" />
+      <h3>
+        Panel de Gestión
+        <mat-label class="sidenav-title">
+          {{ user?.nombreUsuario || "Usuario" }}
+        </mat-label>
+      </h3>
+    </mat-toolbar>
     <mat-nav-list>
-      <a *ngFor="let item of sidenavItems"
-         mat-list-item
-         [routerLink]="item.link"
-         [class.active-link]="isActive(item.link)"
-         [class.admin-item]="item.color === 'primary'">
+      <a
+        *ngFor="let item of sidenavItems"
+        mat-list-item
+        [routerLink]="item.link"
+        [class.active-link]="isActive(item.link)"
+        [class.admin-item]="item.color === 'primary'"
+      >
         {{ item.label }}
       </a>
     </mat-nav-list>

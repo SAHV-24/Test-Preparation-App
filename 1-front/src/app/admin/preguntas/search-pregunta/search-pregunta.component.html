@@ -1,0 +1,12 @@
+<div class="search-pregunta-container">
+  <mat-form-field appearance="outline" class="search-pregunta-field">
+    <mat-label>Buscar pregunta</mat-label>
+    <input matInput [formControl]="searchControl" placeholder="Enunciado de la pregunta" autocomplete="off" />
+    <mat-icon matPrefix>search</mat-icon>
+  </mat-form-field>
+  <mat-nav-list *ngIf="filteredPreguntas.length > 0 && searchControl.value">
+    <mat-list-item *ngFor="let pregunta of filteredPreguntas" (click)="selectPregunta(pregunta)">
+      <span>{{ pregunta.enunciado }}</span>
+    </mat-list-item>
+  </mat-nav-list>
+</div>

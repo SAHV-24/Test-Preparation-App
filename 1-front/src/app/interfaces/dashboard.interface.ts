@@ -13,3 +13,10 @@ export interface DashboardPreguntas {
 export interface DashboardRespuestas {
   totalRespuestas: number;
 }
+
+export interface DashboardStats {
+  totalColaboradores: number;
+  totalTemas: number;
+  totalPreguntas: number;
+  totalRespuestas: number;
+}

@@ -1,0 +1,83 @@
+:host {
+  display: block;
+}
+
+.empty-state {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #888;
+  padding: 16px 0 8px 16px;
+}
+
+mat-list-item.selected {
+  background: #e3f2fd;
+  border-left: 4px solid #1976d2;
+}
+
+mat-list-item {
+  cursor: pointer;
+}
+
+.desc {
+  font-size: 0.95em;
+  color: #666;
+}
+
+.tema-list-content {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.tema-titulo {
+  font-weight: 600;
+  font-size: 1.08em;
+  color: #222;
+  margin-bottom: 2px;
+}
+
+.tema-desc {
+  font-size: 0.97em;
+  color: #666;
+  white-space: pre-line;
+}
+
+.tutorial-header {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.2em;
+  margin-bottom: 1.2em;
+  padding: 1.2em 1em 0.5em 1em;
+  border-radius: 18px;
+  background: linear-gradient(90deg, var(--mat-sys-color-primary, #d21941) 0%, var(--mat-sys-color-secondary, #ff4081) 100%);
+  box-shadow: 0 2px 12px 0 #0001;
+}
+
+.number-tema {
+  font-size: 2.5rem;
+  font-weight: 900;
+  color: #fff;
+  background: linear-gradient(90deg, #fff 0%, #ffe082 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 0.1em;
+}
+
+.tutorial-title {
+  font-size: 1.7rem;
+  font-weight: 800;
+  color: #fff;
+  letter-spacing: -1px;
+  margin-bottom: 0.2em;
+}
+
+.tutorial-desc {
+  font-size: 1.08rem;
+  color: #f3e5f5;
+  font-weight: 500;
+  margin-bottom: 0.2em;
+  max-width: 420px;
+}

@@ -1,1 +1,164 @@
-<p>temas-page works!</p>
+<div class="temas-container">
+  <!-- Header con título y botón crear -->
+  <mat-toolbar class="page-header">
+    <div class="header-content">
+      <div class="title-section">
+        <mat-icon class="header-icon">topic</mat-icon>
+        <h1>Gestión de Temas</h1>
+        <mat-chip-listbox>
+          <mat-chip class="total-chip">
+            <mat-icon>folder</mat-icon>
+            Total: {{ getTotalTemas() }}
+          </mat-chip>
+        </mat-chip-listbox>
+      </div>
+      <button
+        mat-raised-button
+        color="primary"
+        class="create-btn"
+        (click)="crearNuevoTema()"
+        matTooltip="Crear nuevo tema"
+      >
+        <mat-icon>add</mat-icon>
+        Nuevo Tema
+      </button>
+    </div>
+  </mat-toolbar>
+
+  <!-- Loading spinner -->
+  <div *ngIf="isLoading" class="loading-container">
+    <mat-spinner diameter="50"></mat-spinner>
+    <p>Cargando temas...</p>
+  </div>
+
+  <!-- Contenido principal con tabs -->
+  <div *ngIf="!isLoading" class="content-container">
+    <mat-tab-group
+      [(selectedIndex)]="selectedTabIndex"
+      (selectedTabChange)="onTabChange($event.index)"
+      class="periods-tabs"
+    >
+      <ng-container *ngFor="let periodo of [1, 2, 3]; let i = index">
+        <mat-tab>
+          <ng-template mat-tab-label>
+            <mat-icon class="tab-icon">{{ getPeriodoIcon(periodo) }}</mat-icon>
+            <span class="tab-text">Período {{ periodo }}</span>
+            <mat-chip-listbox>
+              <mat-chip
+                class="period-badge"
+                [matBadge]="getTemasActivosPorPeriodo(periodo)"
+                matBadgePosition="after"
+              >
+                {{ getTemasPorPeriodo(periodo).length }}
+              </mat-chip>
+            </mat-chip-listbox>
+          </ng-template>
+
+          <div class="tab-content">
+            <ng-container
+              *ngIf="getTemasPorPeriodo(periodo).length === 0; else temasList"
+            >
+              <div class="empty-state">
+                <mat-icon class="empty-icon">folder_open</mat-icon>
+                <h3>No hay temas en el Período {{ periodo }}</h3>
+                <p>Comienza agregando el primer tema para este período</p>
+                <button
+                  mat-raised-button
+                  color="primary"
+                  (click)="crearNuevoTema()"
+                >
+                  <mat-icon>add</mat-icon>
+                  Crear Primer Tema
+                </button>
+              </div>
+            </ng-container>
+            <ng-template #temasList>
+              <div class="temas-grid">
+                <mat-card
+                  *ngFor="let tema of getTemasPorPeriodo(periodo)"
+                  class="tema-card"
+                >
+                  <mat-card-header>
+                    <div mat-card-avatar class="tema-avatar">
+                      <mat-icon>topic</mat-icon>
+                    </div>
+                    <mat-card-title class="tema-title">{{
+                      tema.nombre
+                    }}</mat-card-title>
+                    <mat-card-subtitle>
+                      <mat-chip-listbox>
+                        <mat-chip
+                          [class]="
+                            'status-chip status-' + tema.estado.toLowerCase()
+                          "
+                          [disabled]="true"
+                        >
+                          <mat-icon matChipAvatar>{{
+                            tema.estado === "Activo"
+                              ? "check_circle"
+                              : "pause_circle"
+                          }}</mat-icon>
+                          {{ tema.estado }}
+                        </mat-chip>
+                      </mat-chip-listbox>
+                    </mat-card-subtitle>
+                  </mat-card-header>
+
+                  <mat-card-content>
+                    <p class="tema-description">
+                      {{ tema.descripcion || "Sin descripción disponible" }}
+                    </p>
+                    <div class="tema-info">
+                      <div class="info-item" *ngIf="tema.fotoFormulasUrl">
+                        <mat-icon>image</mat-icon>
+                        <span>Imagen de fórmulas</span>
+                      </div>
+                      <div class="info-item" *ngIf="tema.linkPresentacionUrl">
+                        <mat-icon>slideshow</mat-icon>
+                        <span>Presentación</span>
+                      </div>
+                      <div class="info-item">
+                        <mat-icon>schedule</mat-icon>
+                        <span>Creado: {{ formatDate(tema.createdAt) }}</span>
+                      </div>
+                    </div>
+                  </mat-card-content>
+
+                  <mat-card-actions class="card-actions">
+                    <button
+                      mat-button
+                      color="primary"
+                      (click)="verTema(tema)"
+                      matTooltip="Ver detalles del tema"
+                    >
+                      <mat-icon>visibility</mat-icon>
+                      Ver
+                    </button>
+                    <button
+                      mat-button
+                      color="accent"
+                      (click)="editarTema(tema)"
+                      matTooltip="Editar tema"
+                    >
+                      <mat-icon>edit</mat-icon>
+                      Editar
+                    </button>
+                    <button
+                      mat-button
+                      color="warn"
+                      (click)="eliminarTema(tema)"
+                      matTooltip="Eliminar tema"
+                    >
+                      <mat-icon>delete</mat-icon>
+                      Eliminar
+                    </button>
+                  </mat-card-actions>
+                </mat-card>
+              </div>
+            </ng-template>
+          </div>
+        </mat-tab>
+      </ng-container>
+    </mat-tab-group>
+  </div>
+</div>

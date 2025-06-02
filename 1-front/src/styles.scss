@@ -2,6 +2,7 @@
 
 html {
   color-scheme: light;
+  font-family: Roboto, sans-serif; // Aplicar Roboto a todo
   @include mat.theme((
     color: mat.$red-palette,
     typography: Roboto,
@@ -11,4 +12,9 @@ html {
 
 body.dark-mode {
   color-scheme: dark;
+  font-family: Roboto, sans-serif; // Aplicar Roboto a todo en modo oscuro
+}
+
+.cursor-pointer {
+  cursor: pointer;
 }

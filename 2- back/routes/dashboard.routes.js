@@ -87,41 +87,22 @@ const Respuesta = require('../models/respuesta.model');
 /** Protege todos los endpoints */
 router.use(authMiddleware);
 
-// Total de colaboradores
-router.get('/usuarios/colaboradores/count', async (req, res) => {
-  try {
-    const count = await Usuario.countDocuments({ rol: 'Colaborador' });
-    res.json({ totalColaboradores: count });
-  } catch (err) {
-    res.status(500).json({ message: err.message });
-  }
-});
 
-// Total de temas
-router.get('/temas/count', async (req, res) => {
+// Endpoint único para dashboard
+router.get('/stats', async (req, res) => {
   try {
-    const count = await Tema.countDocuments();
-    res.json({ totalTemas: count });
-  } catch (err) {
-    res.status(500).json({ message: err.message });
-  }
-});
-
-// Total de preguntas
-router.get('/preguntas/count', async (req, res) => {
-  try {
-    const count = await Pregunta.countDocuments();
-    res.json({ totalPreguntas: count });
-  } catch (err) {
-    res.status(500).json({ message: err.message });
-  }
-});
-
-// Total de respuestas
-router.get('/respuestas/count', async (req, res) => {
-  try {
-    const count = await Respuesta.countDocuments();
-    res.json({ totalRespuestas: count });
+    const [totalColaboradores, totalTemas, totalPreguntas, totalRespuestas] = await Promise.all([
+      Usuario.countDocuments({ rol: 'Colaborador' }),
+      Tema.countDocuments(),
+      Pregunta.countDocuments(),
+      Respuesta.countDocuments(),
+    ]);
+    res.json({
+      totalColaboradores,
+      totalTemas,
+      totalPreguntas,
+      totalRespuestas,
+    });
   } catch (err) {
     res.status(500).json({ message: err.message });
   }

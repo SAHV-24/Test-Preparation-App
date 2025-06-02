@@ -1,0 +1,353 @@
+// Colores principales
+:host {
+  display: block;
+  padding: 16px;
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  min-height: 100vh;
+}
+
+// Toolbar principal
+.main-toolbar {
+  border-radius: 12px;
+  margin-bottom: 24px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  
+  .toolbar-icon {
+    font-size: 28px;
+    margin-right: 16px;
+  }
+  
+  .toolbar-title {
+    font-size: 24px;
+    font-weight: 500;
+  }
+  
+  .spacer {
+    flex: 1 1 auto;
+  }
+}
+
+// Botón de agregar con animación
+.add-button {
+  border-radius: 25px;
+  padding: 12px 24px;
+  font-size: 16px;
+  font-weight: 500;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  
+  mat-icon {
+    margin-right: 8px;
+  }
+  
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+  }
+}
+
+// Loading container
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+  
+  p {
+    margin-top: 16px;
+    font-size: 18px;
+    color: #666;
+  }
+}
+
+// Contenedor del formulario
+.form-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 24px;
+  
+  .form-card {
+    width: 100%;
+    max-width: 800px;
+    margin: 0 20px;
+    border-radius: 16px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+    
+    mat-card-header {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      border-radius: 16px 16px 0 0;
+      padding: 20px;
+      margin: -16px -16px 24px -16px;
+      
+      mat-card-title {
+        display: flex;
+        align-items: center;
+        font-size: 20px;
+        
+        mat-icon {
+          margin-right: 12px;
+          font-size: 24px;
+        }
+      }
+    }
+  }
+}
+
+// Filas del formulario
+.form-row {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 16px;
+  
+  .form-field {
+    flex: 1;
+  }
+  
+  .toggle-container {
+    display: flex;
+    align-items: center;
+    flex: 1;
+    
+    .toggle-label {
+      display: flex;
+      align-items: center;
+      font-size: 16px;
+      
+      mat-icon {
+        margin-right: 8px;
+      }
+    }
+  }
+}
+
+// Botón de guardar
+.save-button {
+  border-radius: 25px;
+  padding: 12px 24px;
+  font-weight: 500;
+  
+  mat-icon {
+    margin-right: 8px;
+  }
+}
+
+// Card de la tabla
+.table-card {
+  border-radius: 16px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+  
+  mat-card-header {
+    mat-card-title {
+      display: flex;
+      align-items: center;
+      color: #333;
+      
+      mat-icon {
+        margin-right: 12px;
+        color: #667eea;
+      }
+    }
+  }
+}
+
+// Contenedor de la tabla
+.table-container {
+  overflow-x: auto;
+  border-radius: 12px;
+  
+  .users-table {
+    width: 100%;
+    
+    th {
+      background-color: #f8f9fa;
+      font-weight: 600;
+      color: #333;
+      
+      mat-icon {
+        margin-right: 8px;
+        font-size: 18px;
+      }
+    }
+    
+    .user-row {
+      transition: background-color 0.3s ease;
+      
+      &:hover {
+        background-color: rgba(102, 126, 234, 0.05);
+      }
+    }
+  }
+}
+
+// Información del usuario
+.user-info {
+  display: flex;
+  align-items: center;
+  
+  .user-avatar {
+    margin-right: 12px;
+    font-size: 24px;
+    color: #667eea;
+  }
+}
+
+// Información de expiración
+.expiry-info {
+  display: flex;
+  align-items: center;
+  
+  mat-icon {
+    margin-right: 8px;
+  }
+  
+  &.expired {
+    color: #f44336;
+    font-weight: 500;
+  }
+}
+
+// Botones de acción
+.action-buttons {
+  display: flex;
+  gap: 8px;
+  
+  .action-button {
+    width: 36px;
+    height: 36px;
+    
+    &:hover {
+      transform: scale(1.1);
+    }
+  }
+}
+
+// Estado vacío
+.empty-state {
+  text-align: center;
+  border-radius: 16px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+  
+  .empty-content {
+    padding: 40px;
+    
+    .empty-icon {
+      font-size: 64px;
+      color: #ccc;
+      margin-bottom: 16px;
+    }
+    
+    h2 {
+      color: #666;
+      margin-bottom: 8px;
+    }
+    
+    p {
+      color: #999;
+      margin-bottom: 24px;
+    }
+    
+    .empty-action {
+      border-radius: 25px;
+      padding: 12px 24px;
+      
+      mat-icon {
+        margin-right: 8px;
+      }
+    }
+  }
+}
+
+// Animaciones
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes bounce {
+  0%, 20%, 53%, 80%, 100% {
+    animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+    transform: translate3d(0, 0, 0);
+  }
+  40%, 43% {
+    animation-timing-function: cubic-bezier(0.755, 0.05, 0.855, 0.06);
+    transform: translate3d(0, -8px, 0);
+  }
+  70% {
+    animation-timing-function: cubic-bezier(0.755, 0.05, 0.855, 0.06);
+    transform: translate3d(0, -4px, 0);
+  }
+  90% {
+    transform: translate3d(0, -2px, 0);
+  }
+}
+
+.pulse-animation {
+  animation: pulse 2s infinite;
+  
+  &:hover {
+    animation: none;
+  }
+}
+
+.bounce-animation {
+  &:hover {
+    animation: bounce 1s;
+  }
+}
+
+// Responsive design
+@media (max-width: 768px) {
+  .form-container {
+    margin: 0;
+    
+    .form-card {
+      margin: 0 10px;
+      max-width: none;
+    }
+  }
+  
+  .form-row {
+    flex-direction: column;
+    
+    .form-field {
+      width: 100%;
+    }
+  }
+  
+  .action-buttons {
+    flex-direction: column;
+    gap: 4px;
+  }
+  
+  .main-toolbar {
+    .toolbar-title {
+      font-size: 18px;
+    }
+    
+    .add-button {
+      font-size: 14px;
+      padding: 8px 16px;
+    }
+  }
+}
+
+// Estilos para snackbar
+::ng-deep {
+  .success-snackbar {
+    background-color: #4caf50 !important;
+    color: white !important;
+  }
+  
+  .error-snackbar {
+    background-color: #f44336 !important;
+    color: white !important;
+  }
+}

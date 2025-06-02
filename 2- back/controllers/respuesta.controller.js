@@ -5,9 +5,14 @@ const fs = require('fs');
 // Obtener todas las respuestas de una pregunta
 exports.getRespuestasByPregunta = async (req, res) => {
   try {
+
+
+
     const respuestas = await Respuesta.find({ idPregunta: req.params.idPregunta })
       .populate('idPregunta')
       .populate('idUsuario');
+
+
     res.json(respuestas);
   } catch (err) {
     res.status(500).json({ message: err.message });

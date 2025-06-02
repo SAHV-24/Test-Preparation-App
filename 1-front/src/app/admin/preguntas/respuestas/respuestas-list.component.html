@@ -1,0 +1,17 @@
+<mat-list *ngIf="respuestas.length > 0; else emptyState">
+  <mat-list-item *ngFor="let respuesta of respuestas">
+    <span>{{ respuesta.textoRespuesta }}</span>
+    <mat-icon *ngIf="respuesta.esLaCorrecta" color="primary" class="ml-2">check_circle</mat-icon>
+    <img *ngIf="respuesta.fotoUri || respuesta.fotoUrl" [src]="respuesta.fotoUri || respuesta.fotoUrl" alt="img" class="respuesta-img" />
+    <span class="spacer"></span>
+    <button mat-icon-button color="primary" *ngIf="puedeEditar" (click)="editar.emit(respuesta)" matTooltip="Editar">
+      <mat-icon>edit</mat-icon>
+    </button>
+    <button mat-icon-button color="warn" *ngIf="puedeEditar" (click)="eliminar.emit(respuesta)" matTooltip="Eliminar">
+      <mat-icon>delete</mat-icon>
+    </button>
+  </mat-list-item>
+</mat-list>
+<ng-template #emptyState>
+  <div class="empty-state">No hay respuestas registradas.</div>
+</ng-template>

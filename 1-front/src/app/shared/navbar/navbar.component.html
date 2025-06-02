@@ -1,0 +1,74 @@
+<mat-toolbar color="primary" class="navbar">
+  <button
+    mat-icon-button
+    (click)="drawer?.toggle()"
+    *ngIf="authService.isAdminOrColaborador() && authService.isLoggedIn()"
+  >
+    <mat-icon>menu</mat-icon>
+  </button>
+
+  <span
+    class="navbar-title special-title cursor-pointer"
+    [routerLink]="['/']"
+    >FyEvP</span
+  >
+
+  <span class="spacer"></span>
+
+  <div class="nav-buttons-container">
+    <ng-container *ngIf="!isMobile">
+      <button
+        *ngFor="let item of navItems"
+        mat-button
+        [routerLink]="item.link"
+        routerLinkActive="active"
+      >
+        {{ item.label }}
+      </button>
+      <button
+        *ngIf="!authService.isLoggedIn()"
+        mat-raised-button
+        color="accent"
+        routerLink="/login"
+      >
+        Login
+      </button>
+      <button
+        *ngIf="authService.isLoggedIn()"
+        mat-raised-button
+        color="warn"
+        (click)="logout()"
+      >
+        Cerrar sesión
+      </button>
+    </ng-container>
+
+    <ng-container *ngIf="isMobile">
+      <button
+        *ngFor="let item of navItems"
+        mat-icon-button
+        [routerLink]="item.link"
+        routerLinkActive="active"
+        [matTooltip]="item.label"
+      >
+        <mat-icon>{{ getIcon(item.label) }}</mat-icon>
+      </button>
+      <button
+        *ngIf="!authService.isLoggedIn()"
+        mat-icon-button
+        routerLink="/login"
+        matTooltip="Login"
+      >
+        <mat-icon>login</mat-icon>
+      </button>
+      <button
+        *ngIf="authService.isLoggedIn()"
+        mat-icon-button
+        (click)="logout()"
+        matTooltip="Cerrar sesión"
+      >
+        <mat-icon>logout</mat-icon>
+      </button>
+    </ng-container>
+  </div>
+</mat-toolbar>

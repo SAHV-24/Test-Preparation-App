@@ -31,4 +31,9 @@ export class PreguntaService extends CRUDService<Pregunta> {
     }
     return this.http.get<PreguntaAleatoriaPublica[]>(url);
   }
+
+  // Obtener preguntas por idTema
+  getByTema(idTema: string): Observable<Pregunta[]> {
+    return this.http.get<Pregunta[]>(`${environment.API_URL}${this.baseUrl}/tema/${idTema}`);
+  }
 }

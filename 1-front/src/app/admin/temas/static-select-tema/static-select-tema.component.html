@@ -1,0 +1,29 @@
+<div class="tutorial-header">
+  <span class="number-tema">1.</span>
+  <span class="tutorial-title">Selecciona un Tema</span>
+  <span class="tutorial-desc"
+    >Elige el tema sobre el que quieres ver o crear preguntas. Los temas están
+    organizados por corte.</span
+  >
+</div>
+<mat-tab-group [(selectedIndex)]="selectedTab">
+  <mat-tab *ngFor="let periodo of [1, 2, 3]" label="Corte {{ periodo }}">
+    <mat-nav-list *ngIf="getTemasPorPeriodo(periodo).length > 0; else empty">
+      <mat-list-item
+        *ngFor="let tema of getTemasPorPeriodo(periodo)"
+        [class.selected]="tema._id === selectedTemaId"
+        (click)="onSelectTema(tema)"
+      >
+        <div class="tema-list-content">
+          <div class="tema-titulo">{{ tema.nombre | slice : 0 : 30 }}</div>
+        </div>
+      </mat-list-item>
+    </mat-nav-list>
+    <ng-template #empty>
+      <div class="empty-state">
+        <mat-icon color="warn">folder_open</mat-icon>
+        <span>No hay temas en este corte</span>
+      </div>
+    </ng-template>
+  </mat-tab>
+</mat-tab-group>

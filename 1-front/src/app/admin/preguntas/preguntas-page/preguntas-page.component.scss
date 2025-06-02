@@ -1,0 +1,209 @@
+.preguntas-layout {
+  display: flex;
+  min-height: 60vh;
+}
+
+.temas-sidebar {
+  flex: 0 0 32%;
+  max-width: 340px;
+  min-width: 220px;
+  background: #fafbfc;
+  border-right: 1px solid #e0e0e0;
+  padding: 18px 8px 8px 8px;
+  box-sizing: border-box;
+}
+
+.preguntas-content {
+  flex: 1 1 0;
+  padding: 24px 32px;
+}
+
+.tema-info {
+  display: flex;
+  gap: 24px;
+  margin-bottom: 18px;
+  font-size: 1.08em;
+}
+.corte {
+  color: #1976d2;
+  font-weight: 500;
+}
+.estado {
+  padding: 2px 10px;
+  border-radius: 12px;
+  font-size: 0.98em;
+  font-weight: 500;
+  &.activo {
+    background: #e8f5e9;
+    color: #388e3c;
+    border: 1px solid #388e3c33;
+  }
+  &.inactivo {
+    background: #fff3e0;
+    color: #f57c00;
+    border: 1px solid #f57c0033;
+  }
+}
+.empty-state {
+  color: #888;
+  padding: 32px 0;
+  text-align: center;
+}
+
+.pulse-btn {
+  animation: pulse 1.2s infinite;
+  margin-bottom: 18px;
+}
+@keyframes pulse {
+  0% { box-shadow: 0 0 0 0 #1976d233; }
+  70% { box-shadow: 0 0 0 10px #1976d200; }
+  100% { box-shadow: 0 0 0 0 #1976d233; }
+}
+
+.preguntas-list {
+  margin-top: 18px;
+}
+.pregunta-enunciado {
+  font-weight: 500;
+  flex: 1 1 auto;
+}
+.pregunta-tipo, .pregunta-dificultad {
+  font-size: 0.95em;
+  color: #666;
+  margin-left: 8px;
+}
+mat-list-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.pregunta-acciones {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-left: auto;
+}
+.add-respuesta-btn {
+  animation: pulse 1.2s infinite;
+  margin-right: 8px;
+  box-shadow: 0 2px 8px #1976d255;
+}
+
+.preguntas-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 18px;
+  margin-top: 12px;
+}
+.pregunta-card {
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px #0001;
+  padding: 16px 14px 12px 14px;
+  display: flex;
+  flex-direction: column;
+  min-height: 120px;
+  position: relative;
+}
+.pregunta-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+.pregunta-estado {
+  font-size: 0.98em;
+  font-weight: 500;
+  border-radius: 8px;
+  padding: 2px 12px;
+  &.activo {
+    background: #e8f5e9;
+    color: #388e3c;
+    border: 1px solid #388e3c33;
+  }
+  &.inactivo {
+    background: #fff3e0;
+    color: #f57c00;
+    border: 1px solid #f57c0033;
+  }
+}
+.pregunta-acciones {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.add-respuesta-btn {
+  animation: pulse 1.2s infinite;
+  box-shadow: 0 2px 8px #1976d255;
+}
+@keyframes pulse {
+  0% { box-shadow: 0 0 0 0 #1976d233; }
+  70% { box-shadow: 0 0 0 10px #1976d200; }
+  100% { box-shadow: 0 0 0 0 #1976d233; }
+}
+.pregunta-enunciado {
+  font-weight: 500;
+  font-size: 1.08em;
+  margin-bottom: 6px;
+  color: #222;
+}
+.pregunta-img {
+  margin-top: 6px;
+  color: #888;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.tema-titulo {
+  font-size: 2.2rem;
+  font-weight: 800;
+  margin-bottom: 0.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  letter-spacing: -1px;
+}
+.tema-label {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--mat-sys-color-primary, #1976d2);
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+}
+.tema-nombre-gradient {
+  font-size: 2.3rem;
+  font-weight: 900;
+  background: linear-gradient(90deg, var(--mat-sys-color-primary, #1976d2) 0%, var(--mat-sys-color-secondary, #ff4081) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  letter-spacing: -2px;
+}
+
+.pregunta-enunciado {
+  font-size: 1.18rem;
+  font-weight: 600;
+  margin: 10px 0 6px 0;
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+}
+.pregunta-enunciado-label {
+  font-size: 0.98rem;
+  font-weight: 500;
+  color: var(--mat-sys-color-primary, #1976d2);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+.pregunta-enunciado-text {
+  font-size: 1.18rem;
+  font-weight: 600;
+  color: var(--mat-sys-color-on-surface, #222);
+}
+
+.btn-label {
+  font-size: 1.08rem;
+  font-weight: 600;
+  margin-left: 0.3em;
+  letter-spacing: 0.5px;
+}

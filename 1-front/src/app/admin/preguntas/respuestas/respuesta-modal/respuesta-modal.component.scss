@@ -1,0 +1,127 @@
+.respuesta-modal-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: linear-gradient(90deg, var(--mat-sys-primary-container), var(--mat-sys-secondary-container));
+  padding: 18px 20px 10px 20px;
+  border-radius: 12px 12px 0 0;
+  box-shadow: 0 2px 8px rgba(33,150,243,0.08);
+  margin-bottom: 10px;
+}
+
+.respuesta-icon {
+  font-size: 2.2rem;
+  color: var(--mat-sys-primary) !important;
+  background: #fff;
+  border-radius: 50%;
+  box-shadow: 0 2px 8px var(--mat-sys-primary, 0.10);
+  padding: 6px;
+  border: 2px solid var(--mat-sys-primary);
+}
+
+.respuesta-title {
+  font-weight: 700;
+  font-size: 1.25rem;
+  color: var(--mat-sys-primary);
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+.respuesta-form {
+  background: var(--mat-sys-surface-container, var(--mat-sys-surface));
+  border-radius: 0 0 12px 12px;
+  box-shadow: 0 2px 12px rgba(33,150,243,0.04);
+  padding: 24px 20px 16px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.full-width {
+  width: 100%;
+}
+
+mat-form-field.full-width {
+  margin-bottom: 8px;
+}
+
+.file-upload-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 8px;
+}
+
+.file-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  font-size: 15px;
+  padding: 6px 12px;
+  border-radius: 6px;
+  background: var(--mat-sys-primary-container);
+  color: var(--mat-sys-primary);
+  font-weight: 500;
+  transition: background 0.2s;
+}
+.file-label:hover {
+  background: var(--mat-sys-secondary-container);
+}
+
+.img-upload-icon {
+  color: var(--mat-sys-primary) !important;
+}
+
+.image-preview {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.image-preview img {
+  width: 56px;
+  height: 56px;
+  object-fit: cover;
+  border-radius: 8px;
+  border: 2px solid var(--mat-sys-primary);
+  box-shadow: 0 2px 8px var(--mat-sys-primary, 0.10);
+}
+
+.file-hint {
+  font-size: 13px;
+  color: var(--mat-sys-on-surface-variant, #888);
+  margin-left: 8px;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 14px;
+  margin-top: 12px;
+}
+
+// Animación sutil para feedback
+button[mat-raised-button], button[mat-icon-button] {
+  transition: box-shadow 0.2s, transform 0.1s;
+}
+button[mat-raised-button]:active, button[mat-icon-button]:active {
+  box-shadow: 0 4px 16px rgba(33,150,243,0.12);
+  transform: scale(0.97);
+}
+
+// Responsive
+@media (max-width: 600px) {
+  .respuesta-modal-header {
+    padding: 12px 8px 6px 8px;
+    font-size: 1rem;
+  }
+  .respuesta-form {
+    padding: 10px 6px 8px 6px;
+    gap: 10px;
+  }
+  .image-preview img {
+    width: 36px;
+    height: 36px;
+  }
+}

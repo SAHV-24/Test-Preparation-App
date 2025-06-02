@@ -1,0 +1,11 @@
+.confirm-message {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 1.08rem;
+  padding: 8px 0 12px 0;
+}
+
+mat-dialog-content {
+  min-width: 320px;
+}

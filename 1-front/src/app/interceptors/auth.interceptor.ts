@@ -6,7 +6,7 @@ import {
   HttpRequest,
 } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { AuthService } from './auth.service';
+import { AuthService } from '../services/auth.service';
 import { environment } from '../environment';
 
 @Injectable()
@@ -15,14 +15,10 @@ export class AuthInterceptor implements HttpInterceptor {
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     const token = this.authService.getToken();
-    // Solo agrega el header si la petición es al backend (no a assets, etc.)
-    const isApiUrl = req.url.startsWith(environment.API_URL);
-
-
-    if (token && isApiUrl) {
+    if (token ) {
       const authReq = req.clone({
         setHeaders: {
-          Authorization: token,
+          Authorization: `Bearer ${token}`,
         },
       });
       return next.handle(authReq);

@@ -116,7 +116,7 @@ export class LoginComponent {
   login() {
     this.loading = true;
     this.error = null;
-    this.auth.login(this.nombreUsuario, this.contrasena).subscribe({
+    this.auth.login(this.nombreUsuario.toLowerCase(), this.contrasena).subscribe({
       next: (res) => {
         this.auth.saveToken(res.token);
         this.auth.saveUser(res.usuario);

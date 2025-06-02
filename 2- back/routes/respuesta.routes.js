@@ -163,7 +163,7 @@ router.use(authMiddleware);
 
 router.get('/pregunta/:idPregunta', respuestaController.getRespuestasByPregunta);
 router.get('/:id', respuestaController.getRespuestaById);
-router.post('/', isColaboradorOrAdmin, checkPreguntaActiva, upload.single('fotoUrl'), respuestaController.createRespuesta);
+router.post('/', isColaboradorOrAdmin, upload.single('foto'), respuestaController.createRespuesta);
 router.put('/:id', isColaboradorOrAdmin, async (req, res, next) => {
   // Busca la respuesta y verifica si la pregunta está activa
   const Respuesta = require('../models/respuesta.model');
@@ -171,7 +171,7 @@ router.put('/:id', isColaboradorOrAdmin, async (req, res, next) => {
   if (!respuesta) return res.status(404).json({ message: 'Respuesta no encontrada' });
   req.body.idPregunta = respuesta.idPregunta;
   return require('../middlewares/role.middleware').checkPreguntaActiva(req, res, next);
-}, upload.single('fotoUrl'), respuestaController.updateRespuesta);
+}, upload.single('foto'), respuestaController.updateRespuesta);
 router.delete('/:id', isColaboradorOrAdmin, respuestaController.deleteRespuesta);
 
 module.exports = router;

@@ -1,1 +1,107 @@
-<p>preguntas-page works!</p>
+<div class="preguntas-layout">
+  <aside class="temas-sidebar">
+    <app-static-select-tema
+      [temas]="temas"
+      [selectedTemaId]="selectedTema?._id || null"
+      (temaSeleccionado)="onTemaSeleccionado($event)"
+    ></app-static-select-tema>
+  </aside>
+  <section class="preguntas-content">
+    <ng-container *ngIf="selectedTema; else seleccionaTema">
+      <h1 class="tema-titulo">
+        <span class="tema-label">TEMA:</span>
+        <span class="tema-nombre-gradient">{{ selectedTema.nombre }}</span>
+      </h1>
+      <div class="tema-info">
+        <span class="corte">Corte: {{ selectedTema.periodo }}</span>
+        <span
+          class="estado"
+          [class.activo]="selectedTema.estado === 'Activo'"
+          [class.inactivo]="selectedTema.estado !== 'Activo'"
+        >
+          {{ selectedTema.estado }}
+        </span>
+      </div>
+      <button
+        mat-raised-button
+        color="primary"
+        class="pulse-btn"
+        (click)="abrirCrearPregunta()"
+      >
+        <mat-icon>add</mat-icon>
+        <span class="btn-label">Agregar Pregunta</span>
+      </button>
+      <app-search-pregunta
+        [preguntas]="preguntas"
+        (preguntaSeleccionada)="onPreguntaSeleccionada($event)"
+      ></app-search-pregunta>
+      <div
+        class="preguntas-list"
+        *ngIf="preguntas.length > 0; else sinPreguntas"
+      >
+        <div class="preguntas-grid">
+          <div
+            class="pregunta-card"
+            *ngFor="let pregunta of preguntasFiltradas"
+          >
+            <div class="pregunta-header">
+              <span
+                class="pregunta-estado"
+                [class.activo]="pregunta.estado === 'Activo'"
+                [class.inactivo]="pregunta.estado !== 'Activo'"
+                >{{ pregunta.estado }}</span
+              >
+              <span class="pregunta-acciones">
+                <button
+                  mat-fab
+                  color="accent"
+                  class="add-respuesta-btn"
+                  matTooltip="Agregar respuesta"
+                  (click)="abrirAgregarRespuesta(pregunta)"
+                >
+                  <mat-icon>add</mat-icon>
+                </button>
+                <button
+                  mat-icon-button
+                  color="primary"
+                  (click)="editarPregunta(pregunta)"
+                  matTooltip="Editar pregunta"
+                >
+                  <mat-icon>edit</mat-icon>
+                </button>
+                <button
+                  mat-icon-button
+                  color="warn"
+                  (click)="eliminarPregunta(pregunta)"
+                  matTooltip="Eliminar pregunta"
+                >
+                  <mat-icon>delete</mat-icon>
+                </button>
+              </span>
+            </div>
+            <div class="pregunta-enunciado">
+              <span class="pregunta-enunciado-label">Pregunta:</span>
+              <span class="pregunta-enunciado-text">{{
+                pregunta.enunciado
+              }}</span>
+            </div>
+            <div class="pregunta-img" *ngIf="pregunta.fotoUri">
+              <mat-icon>image</mat-icon>
+            </div>
+            <app-respuestas-list
+              [idPregunta]="pregunta._id"
+            ></app-respuestas-list>
+          </div>
+        </div>
+      </div>
+      <ng-template #sinPreguntas>
+        <div class="empty-state">No hay preguntas para este tema.</div>
+      </ng-template>
+    </ng-container>
+    <ng-template #seleccionaTema>
+      <div class="empty-state">
+        <p>Selecciona un tema para ver o crear preguntas.</p>
+      </div>
+    </ng-template>
+  </section>
+</div>

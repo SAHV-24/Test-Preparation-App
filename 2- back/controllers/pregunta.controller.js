@@ -30,7 +30,7 @@ exports.getPreguntaById = async (req, res) => {
 // Crear pregunta
 exports.createPregunta = async (req, res) => {
   try {
-    const { enunciado, idTema, dificultad, estado, fotoUri } = req.body;
+    const { enunciado, idTema, estado, fotoUri } = req.body;
     let fotoUrl = fotoUri || "";
     if (req.file) {
       fotoUrl = await uploadImageToCloudinary(req.file.path, 'preguntas');
@@ -39,7 +39,6 @@ exports.createPregunta = async (req, res) => {
     const pregunta = new Pregunta({
       enunciado,
       idTema,
-      dificultad,
       estado,
       fotoUri: fotoUrl,
       idUsuario: req.user._id
@@ -56,10 +55,9 @@ exports.updatePregunta = async (req, res) => {
   try {
     const pregunta = await Pregunta.findById(req.params.id);
     if (!pregunta) return res.status(404).json({ message: 'Pregunta no encontrada' });
-    const { enunciado, idTema, dificultad, estado, fotoUri } = req.body;
+    const { enunciado, idTema, estado, fotoUri } = req.body;
     if (enunciado) pregunta.enunciado = enunciado;
     if (idTema) pregunta.idTema = idTema;
-    if (dificultad) pregunta.dificultad = dificultad;
     if (estado) pregunta.estado = estado;
     if (req.file) {
       pregunta.fotoUri = await uploadImageToCloudinary(req.file.path, 'preguntas');
@@ -82,6 +80,18 @@ exports.deletePregunta = async (req, res) => {
     // Elimina todas las respuestas asociadas a la pregunta
     await require('../models/respuesta.model').deleteMany({ idPregunta: req.params.id });
     res.json({ message: 'Pregunta y sus respuestas eliminadas' });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
+// Obtener preguntas por idTema
+exports.getPreguntasPorTema = async (req, res) => {
+  try {
+    const preguntas = await Pregunta.find({ idTema: req.params.idTema })
+      .populate('idTema')
+      .populate('idUsuario');
+    res.json(preguntas);
   } catch (err) {
     res.status(500).json({ message: err.message });
   }

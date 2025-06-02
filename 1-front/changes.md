@@ -21,3 +21,18 @@
 - El botón de login/cerrar sesión en la navbar depende del estado de autenticación y usa AuthService.
 - El resaltado de la ruta activa en la sidenav ahora funciona correctamente y es visualmente claro.
 - Mejoras visuales y de UX en la navegación y estructura general del frontend.
+- Ahora el modal de pregunta (`PreguntaModalComponent`) soporta edición: cuando se abre para editar, los campos del formulario se autorellenan con los datos de la pregunta seleccionada, incluyendo la imagen si existe.
+- Se implementó la cuadrícula visual para mostrar preguntas en tarjetas simples y limpias, con acciones alineadas y botón llamativo para agregar respuesta.
+- Se integró el `ConfirmDialogComponent` standalone para confirmar la eliminación de preguntas.
+- Se corrigió la importación y uso de servicios y componentes para edición y borrado de preguntas.
+- El formulario de pregunta ahora solo muestra los campos requeridos por el backend y se adapta tanto para crear como para editar preguntas.
+- Mejoras visuales y de UX en la gestión de preguntas: disposición cuadrícula, acciones claras, y feedback inmediato tras crear/editar/eliminar.
+- Se implementó la funcionalidad completa de gestión de respuestas para cada pregunta:
+  - Modal standalone para agregar y editar respuestas (`RespuestaModalComponent`), con soporte para imagen y validaciones.
+  - Componente reutilizable para listar respuestas (`RespuestasListComponent`), con botones de editar y eliminar, estilos modernos y responsive.
+  - Integración total en la página de preguntas: cada tarjeta de pregunta muestra su lista de respuestas y permite CRUD directo.
+  - Se corrigió el error de Angular NG8 sobre índices undefined usando `Record<string, Respuesta[]>` y forzando el id a string en todos los accesos.
+  - Se inicializa `respuestasPorPregunta` como objeto vacío al cambiar de tema para evitar residuos y errores de acceso.
+  - Se mejoró la experiencia visual de la lista de respuestas y el modal, siguiendo la guía de diseño del proyecto.
+- El backend y el frontend ahora están alineados para la gestión de preguntas y respuestas, sin errores de validación ni de tipo.
+- Se garantiza que la UI siempre muestre la información más actualizada tras cada operación CRUD de respuestas.

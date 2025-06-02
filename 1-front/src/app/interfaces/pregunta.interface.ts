@@ -6,13 +6,11 @@ export type Dificultad = 'baja' | 'media' | 'alta';
 
 export interface Pregunta {
   _id?: string;
+  createdAt?: string;
+  enunciado: string;
+  estado: 'Activo' | 'Inactivo';
+  fotoUri?: string;
   idTema: string | Tema;
   idUsuario: string | Usuario;
-  estado: 'Activo' | 'Inactivo';
-  enunciado: string;
-  fotoUri?: string;
-  tipoPregunta: TipoPregunta;
-  dificultad: Dificultad;
-  createdAt?: string;
   updatedAt?: string;
 }

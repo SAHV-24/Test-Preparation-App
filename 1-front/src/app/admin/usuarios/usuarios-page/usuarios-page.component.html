@@ -1,1 +1,256 @@
-<p>usuarios-page works!</p>
+<!-- Toolbar principal -->
+<mat-toolbar color="primary" class="main-toolbar">
+  <mat-icon class="toolbar-icon">group</mat-icon>
+  <span class="toolbar-title">Gestión de Usuarios</span>
+  <span class="spacer"></span>
+  <button 
+    mat-raised-button 
+    color="accent" 
+    class="add-button pulse-animation"
+    (click)="openForm()"
+    [disabled]="isLoading">
+    <mat-icon>person_add</mat-icon>
+    Agregar Usuario
+  </button>
+</mat-toolbar>
+
+<!-- Loading spinner -->
+<div class="loading-container" *ngIf="isLoading">
+  <mat-spinner diameter="50"></mat-spinner>
+  <p>Cargando...</p>
+</div>
+
+<!-- Formulario para crear/editar usuarios -->
+<div class="form-container" *ngIf="showForm">
+  <mat-card class="form-card">
+    <mat-card-header>
+      <mat-card-title>
+        <mat-icon color="primary">{{ editingUser ? 'edit' : 'person_add' }}</mat-icon>
+        {{ editingUser ? 'Editar Usuario' : 'Nuevo Usuario' }}
+      </mat-card-title>
+    </mat-card-header>
+  
+  <mat-card-content>
+    <form [formGroup]="userForm" (ngSubmit)="saveUser()">
+      <div class="form-row">
+        <mat-form-field appearance="outline" class="form-field">
+          <mat-label>Nombre de Usuario</mat-label>
+          <input matInput formControlName="nombreUsuario" placeholder="Ej: juan123">
+          <mat-icon matSuffix>account_circle</mat-icon>
+          <mat-error *ngIf="userForm.get('nombreUsuario')?.hasError('required')">
+            El nombre de usuario es requerido
+          </mat-error>
+          <mat-error *ngIf="userForm.get('nombreUsuario')?.hasError('minlength')">
+            Mínimo 3 caracteres
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="form-field">
+          <mat-label>Nombre Completo</mat-label>
+          <input matInput formControlName="nombreCompleto" placeholder="Ej: Juan Pérez">
+          <mat-icon matSuffix>person</mat-icon>
+          <mat-error *ngIf="userForm.get('nombreCompleto')?.hasError('required')">
+            El nombre completo es requerido
+          </mat-error>
+        </mat-form-field>
+      </div>      <div class="form-row">
+        <mat-form-field appearance="outline" class="form-field" *ngIf="!editingUser">
+          <mat-label>Contraseña</mat-label>
+          <input matInput [type]="hidePassword ? 'password' : 'text'" formControlName="contrasena" placeholder="Mínimo 6 caracteres">
+          <button mat-icon-button matSuffix (click)="togglePasswordVisibility()" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hidePassword">
+            <mat-icon>{{hidePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+          </button>
+          <mat-error *ngIf="userForm.get('contrasena')?.hasError('required')">
+            La contraseña es requerida
+          </mat-error>
+          <mat-error *ngIf="userForm.get('contrasena')?.hasError('minlength')">
+            Mínimo 6 caracteres
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="form-field">
+          <mat-label>Rol</mat-label>
+          <mat-select formControlName="rol">
+            <mat-option *ngFor="let rol of roles" [value]="rol">
+              <mat-icon>{{ rol === 'Admin' ? 'admin_panel_settings' : 'person' }}</mat-icon>
+              {{ rol }}
+            </mat-option>
+          </mat-select>
+          <mat-icon matSuffix>assignment_ind</mat-icon>
+        </mat-form-field>
+      </div>
+
+      <div class="form-row">
+        <div class="toggle-container">
+          <mat-slide-toggle formControlName="activo" color="primary">
+            <span class="toggle-label">
+              <mat-icon>{{ userForm.get('activo')?.value ? 'check_circle' : 'cancel' }}</mat-icon>
+              Usuario {{ userForm.get('activo')?.value ? 'Activo' : 'Inactivo' }}
+            </span>
+          </mat-slide-toggle>
+        </div>
+      </div>
+    </form>
+  </mat-card-content>
+
+  <mat-card-actions align="end">
+    <button 
+      mat-button 
+      color="warn" 
+      (click)="closeForm()"
+      [disabled]="isLoading">
+      <mat-icon>cancel</mat-icon>
+      Cancelar
+    </button>
+    <button 
+      mat-raised-button 
+      color="primary" 
+      (click)="saveUser()"
+      [disabled]="!userForm.valid || isLoading"
+      class="save-button pulse-animation">
+      <mat-icon>save</mat-icon>
+      {{ editingUser ? 'Actualizar' : 'Crear' }}
+    </button>    </mat-card-actions>
+  </mat-card>
+</div>
+
+<!-- Tabla de usuarios -->
+<mat-card class="table-card" *ngIf="!showForm">
+  <mat-card-header>
+    <mat-card-title>
+      <mat-icon color="primary">list</mat-icon>
+      Lista de Usuarios ({{ usuarios.length }})
+    </mat-card-title>
+  </mat-card-header>
+
+  <mat-card-content>
+    <div class="table-container">
+      <table mat-table [dataSource]="usuarios" class="users-table">
+        <!-- Columna Nombre Completo -->
+        <ng-container matColumnDef="nombreCompleto">
+          <th mat-header-cell *matHeaderCellDef>
+            <mat-icon>person</mat-icon>
+            Nombre Completo
+          </th>
+          <td mat-cell *matCellDef="let usuario">
+            <div class="user-info">
+              <mat-icon class="user-avatar">account_circle</mat-icon>
+              <span>{{ usuario.nombreCompleto }}</span>
+            </div>
+          </td>
+        </ng-container>
+
+        <!-- Columna Usuario -->
+        <ng-container matColumnDef="nombreUsuario">
+          <th mat-header-cell *matHeaderCellDef>
+            <mat-icon>account_circle</mat-icon>
+            Usuario
+          </th>
+          <td mat-cell *matCellDef="let usuario">{{ usuario.nombreUsuario }}</td>
+        </ng-container>
+
+        <!-- Columna Rol -->
+        <ng-container matColumnDef="rol">
+          <th mat-header-cell *matHeaderCellDef>
+            <mat-icon>assignment_ind</mat-icon>
+            Rol
+          </th>
+          <td mat-cell *matCellDef="let usuario">
+            <mat-chip [color]="usuario.rol === 'Admin' ? 'primary' : 'accent'" selected>
+              <mat-icon matChipAvatar>{{ usuario.rol === 'Admin' ? 'admin_panel_settings' : 'person' }}</mat-icon>
+              {{ usuario.rol }}
+            </mat-chip>
+          </td>
+        </ng-container>
+
+        <!-- Columna Expira -->
+        <ng-container matColumnDef="expira">
+          <th mat-header-cell *matHeaderCellDef>
+            <mat-icon>schedule</mat-icon>
+            Expira
+          </th>
+          <td mat-cell *matCellDef="let usuario">
+            <div class="expiry-info" [class.expired]="isExpired(usuario.expira)">
+              <mat-icon>{{ isExpired(usuario.expira) ? 'error' : 'schedule' }}</mat-icon>
+              {{ usuario.expira | date:'dd/MM/yyyy' }}
+            </div>
+          </td>
+        </ng-container>
+
+        <!-- Columna Estado -->
+        <ng-container matColumnDef="activo">
+          <th mat-header-cell *matHeaderCellDef>
+            <mat-icon>toggle_on</mat-icon>
+            Estado
+          </th>
+          <td mat-cell *matCellDef="let usuario">
+            <mat-chip [color]="usuario.activo ? 'primary' : 'warn'" selected>
+              <mat-icon matChipAvatar>{{ usuario.activo ? 'check_circle' : 'cancel' }}</mat-icon>
+              {{ usuario.activo ? 'Activo' : 'Inactivo' }}
+            </mat-chip>
+          </td>
+        </ng-container>
+
+        <!-- Columna Acciones -->
+        <ng-container matColumnDef="acciones">
+          <th mat-header-cell *matHeaderCellDef>
+            <mat-icon>settings</mat-icon>
+            Acciones
+          </th>
+          <td mat-cell *matCellDef="let usuario">
+            <div class="action-buttons">
+              <button 
+                mat-mini-fab 
+                color="primary" 
+                (click)="openForm(usuario)"
+                matTooltip="Editar usuario"
+                class="action-button bounce-animation">
+                <mat-icon>edit</mat-icon>
+              </button>
+              
+              <button 
+                mat-mini-fab 
+                [color]="usuario.activo ? 'warn' : 'accent'"
+                (click)="toggleUserStatus(usuario)"
+                [matTooltip]="usuario.activo ? 'Desactivar usuario' : 'Activar usuario'"
+                class="action-button pulse-animation">
+                <mat-icon>{{ usuario.activo ? 'block' : 'check_circle' }}</mat-icon>
+              </button>
+              
+              <button 
+                mat-mini-fab 
+                color="warn" 
+                (click)="deleteUser(usuario)"
+                matTooltip="Eliminar usuario"
+                class="action-button bounce-animation">
+                <mat-icon>delete</mat-icon>
+              </button>
+            </div>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="user-row"></tr>
+      </table>
+    </div>
+  </mat-card-content>
+</mat-card>
+
+<!-- Mensaje cuando no hay usuarios -->
+<mat-card class="empty-state" *ngIf="usuarios.length === 0 && !isLoading && !showForm">
+  <mat-card-content>
+    <div class="empty-content">
+      <mat-icon class="empty-icon">group_off</mat-icon>
+      <h2>No hay usuarios registrados</h2>
+      <p>Comience agregando el primer usuario al sistema</p>
+      <button 
+        mat-raised-button 
+        color="primary" 
+        (click)="openForm()"
+        class="empty-action pulse-animation">
+        <mat-icon>person_add</mat-icon>
+        Agregar Primer Usuario
+      </button>
+    </div>
+  </mat-card-content>
+</mat-card>

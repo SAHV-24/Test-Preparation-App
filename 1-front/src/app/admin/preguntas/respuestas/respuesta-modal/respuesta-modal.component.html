@@ -1,0 +1,43 @@
+<div class="respuesta-modal-header">
+  <mat-icon class="respuesta-icon" color="accent">question_answer</mat-icon>
+  <span class="respuesta-title">
+    {{ data.respuesta ? 'Editar Respuesta' : 'Agregar Respuesta' }}
+  </span>
+</div>
+<form [formGroup]="form" (ngSubmit)="guardar()" class="respuesta-form">
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>Texto de la respuesta</mat-label>
+    <input matInput formControlName="textoRespuesta" maxlength="200" required />
+    <mat-error *ngIf="form.get('textoRespuesta')?.hasError('required')">El texto es obligatorio</mat-error>
+    <mat-error *ngIf="form.get('textoRespuesta')?.hasError('maxlength')">Máximo 200 caracteres</mat-error>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>¿Es la respuesta correcta?</mat-label>
+    <mat-select formControlName="esLaCorrecta" required>
+      <mat-option [value]="true">Sí</mat-option>
+      <mat-option [value]="false">No</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <div class="file-upload-row">
+    <label class="file-label">
+      <mat-icon class="img-upload-icon" color="primary">image</mat-icon> Subir imagen (opcional)
+      <input type="file" accept="image/*" (change)="onFileSelected($event)" />
+    </label>
+    <div *ngIf="imagePreview" class="image-preview">
+      <img [src]="imagePreview" alt="Vista previa imagen" />
+      <button mat-icon-button color="warn" type="button" (click)="eliminarImagen()" matTooltip="Eliminar imagen">
+        <mat-icon>delete</mat-icon>
+      </button>
+    </div>
+    <div class="file-hint">No es necesario subir una imagen para la respuesta.</div>
+  </div>
+
+  <div class="modal-actions">
+    <button mat-button type="button" (click)="cancelar()">Cancelar</button>
+    <button mat-raised-button color="accent" type="submit" [disabled]="form.invalid">
+      <mat-icon>check_circle</mat-icon> {{ data.respuesta ? 'Actualizar' : 'Guardar' }}
+    </button>
+  </div>
+</form>

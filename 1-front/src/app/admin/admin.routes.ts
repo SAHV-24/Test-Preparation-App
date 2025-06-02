@@ -19,19 +19,19 @@ export const adminRoutes: Routes = [
       ),
   },
   {
-    path: 'presentaciones',
-    canActivate: [adminOrColaboradorGuard],
-    loadComponent: () =>
-      import(
-        './presentaciones/presentaciones-page/presentaciones-page.component'
-      ).then((m) => m.PresentacionesPageComponent),
-  },
-  {
     path: 'preguntas',
     canActivate: [adminOrColaboradorGuard],
     loadComponent: () =>
       import('./preguntas/preguntas-page/preguntas-page.component').then(
         (m) => m.PreguntasPageComponent
+      ),
+  },
+  {
+    path: 'dashboard',
+    canActivate: [adminOnlyGuard],
+    loadComponent: () =>
+      import('./dashboard/admin-dashboard-page.component').then(
+        (m) => m.AdminDashboardPageComponent
       ),
   },
   { path: '', redirectTo: 'temas', pathMatch: 'full' },
