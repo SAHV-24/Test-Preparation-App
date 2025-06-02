@@ -14,6 +14,7 @@ import { Router } from '@angular/router';
 import { MatLabel } from '@angular/material/form-field';
 import { Usuario } from './interfaces/usuario.interface';
 import { UsuarioAuth } from './interfaces/usuario-auth.interface';
+import { LocalStorageService } from './services/local-storage.service';
 
 @Component({
   selector: 'app-root',
@@ -42,11 +43,13 @@ export class AppComponent implements OnInit {
     { label: 'Preguntas', link: '/preguntas' },
   ];
   user: UsuarioAuth | null = null;
+  cacheDatos: any = null;
 
   constructor(
     private breakpointObserver: BreakpointObserver,
     public authService: AuthService,
-    private router: Router
+    private router: Router,
+    private localStorageService: LocalStorageService // inyectar el servicio
   ) {}
 
   ngOnInit(): void {
@@ -58,6 +61,13 @@ export class AppComponent implements OnInit {
       });
 
     this.user = this.authService.getUser();
+
+    // Si NO está autenticado, obtener datos cacheados
+    if (!this.authService.isLoggedIn()) {
+      this.localStorageService.getDatos().subscribe((cache) => {
+        this.cacheDatos = cache;
+      });
+    }
   }
 
   get isAdminOrColaborador(): boolean {
@@ -81,6 +91,7 @@ export class AppComponent implements OnInit {
     const items = [
       ...(this.isAdmin
         ? [
+        
           { label: 'Dashboard', link: '/admin/dashboard',  },
             { label: 'Usuarios', link: '/admin/usuarios', color: 'secondary' },
           ]

@@ -9,6 +9,7 @@ const temaRoutes = require('./routes/tema.routes');
 const preguntaRoutes = require('./routes/pregunta.routes');
 const respuestaRoutes = require('./routes/respuesta.routes');
 const dashboardRoutes = require('./routes/dashboard.routes');
+const publicRoutes = require('./routes/public.routes');
 const setupSwagger = require('./swagger');
 
 const app = express();
@@ -24,6 +25,7 @@ app.use('/api/temas', temaRoutes);
 app.use('/api/preguntas', preguntaRoutes);
 app.use('/api/respuestas', respuestaRoutes);
 app.use('/api/dashboard', dashboardRoutes);
+app.use('/api/public', publicRoutes);
 
 setupSwagger(app);
 

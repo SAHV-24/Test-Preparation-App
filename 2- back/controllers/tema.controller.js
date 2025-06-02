@@ -1,4 +1,5 @@
 const Tema = require('../models/tema.model');
+const Pregunta = require('../models/pregunta.model');
 const { uploadImageToCloudinary } = require('../utils/cloudinary');
 const fs = require('fs');
 
@@ -80,6 +81,28 @@ exports.deleteTema = async (req, res) => {
     const tema = await Tema.findByIdAndDelete(req.params.id);
     if (!tema) return res.status(404).json({ message: 'Tema no encontrado' });
     res.json({ message: 'Tema eliminado' });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
+// Obtener temas públicos
+exports.getTemasPublicos = async (req, res) => {
+  try {
+    // Solo temas activos
+    const temas = await Tema.find({ estado: 'Activo' });
+    res.json(temas);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
+// Obtener preguntas públicas
+exports.getPreguntasPublicas = async (req, res) => {
+  try {
+    // Solo preguntas activas
+    const preguntas = await Pregunta.find({ estado: 'Activo' });
+    res.json(preguntas);
   } catch (err) {
     res.status(500).json({ message: err.message });
   }

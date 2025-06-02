@@ -1,1 +1,69 @@
-<p>temas-page works!</p>
+<div class="temas-filtros">
+  <h2 class="temas-titulo">Selecciona un tema</h2>
+  <p class="temas-descripcion">
+    Busca un tema por su <em>nombre</em> o filtra por <em>periodo</em>.
+  </p>
+  <div class="filtros-row">
+    <mat-form-field appearance="outline" class="periodo-select">
+      <mat-label>Filtrar por periodo</mat-label>
+      <mat-select [(value)]="filtroPeriodo" (selectionChange)="filtrarTemas()">
+        <mat-option [value]="null">Todos</mat-option>
+        <mat-option *ngFor="let periodo of periodos" [value]="periodo">Período {{ periodo }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field appearance="outline" class="nombre-autocomplete">
+      <mat-label>Buscar por nombre</mat-label>
+      <input type="text"
+             matInput
+             [formControl]="nombreControl"
+             [matAutocomplete]="autoNombre"
+             placeholder="Escribe el nombre del tema">
+      <mat-autocomplete #autoNombre="matAutocomplete" (optionSelected)="onNombreSelected($event.option.value)">
+        <mat-option *ngFor="let opcion of opcionesNombre" [value]="opcion.nombre">
+          {{ opcion.nombre }}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+  </div>
+</div>
+
+<div class="temas-bento-grid" *ngIf="!loading; else loadingTpl">
+  <mat-card *ngFor="let tema of temasFiltrados" class="tema-card card-elevation-2">
+    <mat-card-header>
+      <mat-card-title>
+        <span class="tema-nombre-gradient">{{ tema.nombre }}</span>
+      </mat-card-title>
+      <mat-card-subtitle>
+        <p class="estado-chip" [ngClass]="tema.estado === 'Activo' ? 'activo' : 'inactivo'">
+          <mat-icon>{{ tema.estado === 'Activo' ? 'check_circle' : 'cancel' }}</mat-icon>
+          {{ tema.estado }}
+        </p>
+        <span style="font-size: 1rem; color: var(--mat-sys-color-on-surface, #888); font-weight: 400;">{{ tema.periodo }}</span>
+      </mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      <p class="tema-descripcion">{{ tema.descripcion }}</p>
+    </mat-card-content>
+    <mat-card-actions class="actions">
+      <button
+        mat-raised-button
+        color="accent"
+        routerLink="/preguntas/{{tema.id}}"
+      >
+        Ver Preguntas
+      </button>
+      <a
+        *ngIf="tema.linkPresentacionUrl.trim().length > 0"
+        [href]="tema.linkPresentacionUrl"
+        target="_blank"
+      >
+        Presentación
+      </a>
+    </mat-card-actions>
+  </mat-card>
+</div>
+<ng-template #loadingTpl>
+  <div class="loading-container">
+    <mat-spinner></mat-spinner>
+  </div>
+</ng-template>

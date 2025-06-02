@@ -36,4 +36,8 @@ export class PreguntaService extends CRUDService<Pregunta> {
   getByTema(idTema: string): Observable<Pregunta[]> {
     return this.http.get<Pregunta[]>(`${environment.API_URL}${this.baseUrl}/tema/${idTema}`);
   }
+
+  getAllPublic(): Observable<Pregunta[]> {
+    return this.http.get<Pregunta[]>(`${environment.API_URL}/api/public/preguntas`);
+  }
 }

@@ -26,4 +26,9 @@ export class RespuestaService extends CRUDService<Respuesta> {
   getByPregunta(idPregunta: string): Observable<Respuesta[]> {
     return this.http.get<Respuesta[]>(`${environment.API_URL}${this.baseUrl}/pregunta/${idPregunta}`);
   }
+
+  // Obtener todas las respuestas públicas
+  getAllPublic(): Observable<Respuesta[]> {
+    return this.http.get<Respuesta[]>(`${environment.API_URL}/api/public/respuestas`);
+  }
 }

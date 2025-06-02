@@ -29,4 +29,8 @@ export class TemaService extends CRUDService<Tema> {
       data instanceof FormData ? data : { ...data }
     );
   }
+
+  getAllPublic(): Observable<Tema[]> {
+    return this.http.get<Tema[]>(`${environment.API_URL}/api/public/temas`);
+  }
 }
