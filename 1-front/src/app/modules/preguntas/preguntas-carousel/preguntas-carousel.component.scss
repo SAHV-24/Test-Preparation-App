@@ -10,43 +10,37 @@
   margin: 32px auto;
   max-width: 600px;
 }
-
 .pregunta-card {
   background: #fff;
   border-radius: 16px;
-  box-shadow: 0 2px 12px rgba(102, 126, 234, 0.08);
+  box-shadow: 0 2px 12px rgba(102,126,234,0.08);
   padding: 32px 24px;
   min-width: 320px;
   max-width: 420px;
   text-align: center;
 }
-
 .tema-titulo {
   font-size: 1.3rem;
   font-weight: 700;
   color: #3f51b5;
   margin-bottom: 8px;
 }
-
 .pregunta-enunciado {
   font-size: 1.1rem;
   color: #444;
   margin-bottom: 8px;
 }
-
 .pregunta-texto {
   font-size: 1.2rem;
   font-weight: 500;
   margin-bottom: 18px;
   color: #222;
 }
-
 .respuestas-list {
   list-style: none;
   padding: 0;
   margin: 0;
 }
-
 .respuestas-list li {
   background: #f5f7fa;
   border-radius: 8px;
@@ -54,25 +48,66 @@
   padding: 10px 16px;
   font-size: 1.05rem;
   color: #333;
-  transition: background 0.2s;
+  transition: background 0.2s, color 0.2s;
+  cursor: pointer;
+  border: 2px solid transparent;
 }
-
-.respuestas-list li:last-child {
-  margin-bottom: 0;
+.respuestas-list li.seleccionable:hover {
+  background: #e3eafc;
+  border-color: #90caf9;
 }
-
+.respuestas-list li.respondida {
+  font-weight: 600;
+  border-color: #1976d2;
+}
+.respuestas-list li.correcta {
+  background: #e8f5e9;
+  color: #388e3c;
+  border-color: #43a047;
+}
+.respuestas-list li.incorrecta {
+  background: #ffebee;
+  color: #c62828;
+  border-color: #e53935;
+}
+.feedback-resultado {
+  margin-top: 18px;
+  font-size: 1.2rem;
+  font-weight: 700;
+}
+.correcto {
+  color: #388e3c;
+}
+.incorrecto {
+  color: #c62828;
+}
 .no-preguntas {
   text-align: center;
   margin: 48px auto;
   color: #b71c1c;
 }
-
+.progreso-bar {
+  margin-top: 18px;
+  text-align: center;
+}
+.progreso-bar span {
+  font-size: 1rem;
+  font-weight: 500;
+  color: #1976d2;
+  margin-bottom: 4px;
+  display: block;
+}
+mat-progress-bar {
+  width: 100%;
+  height: 12px;
+  border-radius: 8px;
+  margin-top: 4px;
+}
 @media (max-width: 700px) {
   .carousel-container {
     flex-direction: column;
     gap: 12px;
   }
-
   .pregunta-card {
     min-width: 0;
     width: 98vw;

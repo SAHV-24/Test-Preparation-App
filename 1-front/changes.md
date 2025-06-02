@@ -36,3 +36,10 @@
   - Se mejoró la experiencia visual de la lista de respuestas y el modal, siguiendo la guía de diseño del proyecto.
 - El backend y el frontend ahora están alineados para la gestión de preguntas y respuestas, sin errores de validación ni de tipo.
 - Se garantiza que la UI siempre muestre la información más actualizada tras cada operación CRUD de respuestas.
+- Se implementó un sistema de filtros y búsqueda avanzada en la página de Temas, con mat-select para periodo y mat-autocomplete para nombre, totalmente responsivo y con estilos modernos.
+- Se creó el servicio core.service.ts para manejar la lógica de calificación de preguntas por usuario anónimo, usando localStorage con una clave separada (preguntas_resueltas), permitiendo registrar, consultar y limpiar respuestas, así como obtener estadísticas y progreso por tema.
+- Se desarrolló el componente PreguntasCarouselComponent como un carousel standalone que muestra solo preguntas no respondidas, permite calificar cada pregunta, muestra feedback visual inmediato (confetti si es correcta, snackbar con la respuesta correcta si es incorrecta), y oculta preguntas ya respondidas.
+- Se integró canvas-confetti vía CDN en index.html para animación de confetti al responder correctamente.
+- El carousel muestra una barra de progreso y porcentaje de avance por tema, y un mensaje especial cuando se han respondido todas las preguntas.
+- Se documentó y actualizó el SRS para reflejar la lógica de cache, límite de consultas y control de acceso público tanto en frontend como en backend para usuarios anónimos/visitantes.
+- Se mejoró la experiencia de usuario y la arquitectura del frontend, separando la manipulación de datos (core.service) del repositorio/cache (local-storage.service), y asegurando una experiencia fluida, visualmente atractiva y alineada con los requisitos del proyecto.

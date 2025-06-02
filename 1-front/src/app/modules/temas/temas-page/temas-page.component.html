@@ -8,18 +8,28 @@
       <mat-label>Filtrar por periodo</mat-label>
       <mat-select [(value)]="filtroPeriodo" (selectionChange)="filtrarTemas()">
         <mat-option [value]="null">Todos</mat-option>
-        <mat-option *ngFor="let periodo of periodos" [value]="periodo">Período {{ periodo }}</mat-option>
+        <mat-option *ngFor="let periodo of periodos" [value]="periodo"
+          >Período {{ periodo }}</mat-option
+        >
       </mat-select>
     </mat-form-field>
     <mat-form-field appearance="outline" class="nombre-autocomplete">
       <mat-label>Buscar por nombre</mat-label>
-      <input type="text"
-             matInput
-             [formControl]="nombreControl"
-             [matAutocomplete]="autoNombre"
-             placeholder="Escribe el nombre del tema">
-      <mat-autocomplete #autoNombre="matAutocomplete" (optionSelected)="onNombreSelected($event.option.value)">
-        <mat-option *ngFor="let opcion of opcionesNombre" [value]="opcion.nombre">
+      <input
+        type="text"
+        matInput
+        [formControl]="nombreControl"
+        [matAutocomplete]="autoNombre"
+        placeholder="Escribe el nombre del tema"
+      />
+      <mat-autocomplete
+        #autoNombre="matAutocomplete"
+        (optionSelected)="onNombreSelected($event.option.value)"
+      >
+        <mat-option
+          *ngFor="let opcion of opcionesNombre"
+          [value]="opcion.nombre"
+        >
           {{ opcion.nombre }}
         </mat-option>
       </mat-autocomplete>
@@ -28,17 +38,32 @@
 </div>
 
 <div class="temas-bento-grid" *ngIf="!loading; else loadingTpl">
-  <mat-card *ngFor="let tema of temasFiltrados" class="tema-card card-elevation-2">
+  <mat-card
+    *ngFor="let tema of temasFiltrados"
+    class="tema-card card-elevation-2"
+  >
     <mat-card-header>
       <mat-card-title>
         <span class="tema-nombre-gradient">{{ tema.nombre }}</span>
       </mat-card-title>
       <mat-card-subtitle>
-        <p class="estado-chip" [ngClass]="tema.estado === 'Activo' ? 'activo' : 'inactivo'">
-          <mat-icon>{{ tema.estado === 'Activo' ? 'check_circle' : 'cancel' }}</mat-icon>
+        <p
+          class="estado-chip"
+          [ngClass]="tema.estado === 'Activo' ? 'activo' : 'inactivo'"
+        >
+          <mat-icon>{{
+            tema.estado === "Activo" ? "check_circle" : "cancel"
+          }}</mat-icon>
           {{ tema.estado }}
         </p>
-        <span style="font-size: 1rem; color: var(--mat-sys-color-on-surface, #888); font-weight: 400;">{{ tema.periodo }}</span>
+        <span
+          style="
+            font-size: 1rem;
+            color: var(--mat-sys-color-on-surface, #888);
+            font-weight: 400;
+          "
+          >{{ tema.periodo }}</span
+        >
       </mat-card-subtitle>
     </mat-card-header>
     <mat-card-content>
@@ -48,7 +73,7 @@
       <button
         mat-raised-button
         color="accent"
-        routerLink="/preguntas/{{tema.id}}"
+        [routerLink]="'/preguntas/' + tema._id"
       >
         Ver Preguntas
       </button>

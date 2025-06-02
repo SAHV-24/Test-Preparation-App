@@ -1,0 +1,44 @@
+<div *ngIf="tema && preguntasNoResueltas.length > 0; else noPreguntas">
+  <div class="carousel-container">
+    <button mat-icon-button (click)="prevPregunta()" [disabled]="currentIndex === 0">
+      <mat-icon>chevron_left</mat-icon>
+    </button>
+    <div class="pregunta-card">
+      <h2 class="tema-titulo">{{ tema.nombre }}</h2>
+      <h3 class="pregunta-enunciado">Pregunta {{ currentIndex + 1 }} de {{ preguntasNoResueltas.length }}</h3>
+      <p class="pregunta-texto">{{ preguntasNoResueltas[currentIndex].enunciado }}</p>
+      <ul class="respuestas-list">
+        <li *ngFor="let r of respuestasPorPregunta[preguntasNoResueltas[currentIndex]._id]"
+            [class.respondida]="resultadoActual && resultadoActual.respuestaId === r._id"
+            [class.correcta]="resultadoActual && resultadoActual.respuestaId === r._id && resultadoActual.esCorrecta && r.esLaCorrecta"
+            [class.incorrecta]="resultadoActual && resultadoActual.respuestaId === r._id && !resultadoActual.esCorrecta"
+            (click)="seleccionarRespuesta(r)"
+            [class.seleccionable]="!resultadoActual">
+          <span class="respuesta-texto">{{ r.textoRespuesta }}</span>
+          <mat-icon *ngIf="resultadoActual && resultadoActual.respuestaId === r._id && resultadoActual.esCorrecta && r.esLaCorrecta" color="primary">check_circle</mat-icon>
+          <mat-icon *ngIf="resultadoActual && resultadoActual.respuestaId === r._id && !resultadoActual.esCorrecta" color="warn">cancel</mat-icon>
+        </li>
+      </ul>
+      <div *ngIf="resultadoActual" class="feedback-resultado">
+        <span *ngIf="resultadoActual.esCorrecta" class="correcto">¡Correcto!</span>
+        <span *ngIf="!resultadoActual.esCorrecta" class="incorrecto">Incorrecto</span>
+      </div>
+      <div class="progreso-bar">
+        <span>Progreso: {{ progresoTema }}%</span>
+        <mat-progress-bar mode="determinate" [value]="progresoTema"></mat-progress-bar>
+      </div>
+    </div>
+    <button mat-icon-button (click)="nextPregunta()" [disabled]="currentIndex === preguntasNoResueltas.length - 1">
+      <mat-icon>chevron_right</mat-icon>
+    </button>
+  </div>
+</div>
+<ng-template #noPreguntas>
+  <div class="no-preguntas">
+    <h2 *ngIf="tema">¡Has respondido todas las preguntas de este tema!</h2>
+    <div class="progreso-bar">
+      <span>Progreso: {{ progresoTema }}%</span>
+      <mat-progress-bar mode="determinate" [value]="progresoTema"></mat-progress-bar>
+    </div>
+  </div>
+</ng-template>
