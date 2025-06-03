@@ -10,15 +10,36 @@
   margin: 32px auto;
   max-width: 600px;
 }
+
 .pregunta-card {
   background: #fff;
-  border-radius: 16px;
-  box-shadow: 0 2px 12px rgba(102,126,234,0.08);
-  padding: 32px 24px;
+  border-radius: 14px;
+  box-shadow: 0 2px 8px rgba(210, 25, 90, 0.10); // morado
+  margin-bottom: 18px;
+  padding: 18px 20px;
+  border-left: 6px solid #f06292; // rosa fuerte
+  transition: box-shadow 0.2s, border-color 0.2s;
   min-width: 320px;
   max-width: 420px;
   text-align: center;
 }
+
+.pregunta-card .tema-titulo {
+  color: #d2195a; // morado
+}
+
+.pregunta-card .pregunta-enunciado {
+  color: #f06292; // rosa fuerte
+}
+
+.pregunta-card .respuesta-correcta {
+  color: #f06292; // rosa fuerte
+}
+
+.pregunta-card .respuesta-correcta .texto {
+  color: #d2195a; // morado
+}
+
 .tema-titulo {
   font-size: 1.3rem;
   font-weight: 700;
@@ -53,12 +74,12 @@
   border: 2px solid transparent;
 }
 .respuestas-list li.seleccionable:hover {
-  background: #e3eafc;
-  border-color: #90caf9;
+  background: #fce4ec; // rosa muy claro
+  border-color: #f06292; // rosa fuerte
 }
 .respuestas-list li.respondida {
   font-weight: 600;
-  border-color: #1976d2;
+  border-color: #f06292; // rosa fuerte
 }
 .respuestas-list li.correcta {
   background: #e8f5e9;
@@ -93,7 +114,7 @@
 .progreso-bar span {
   font-size: 1rem;
   font-weight: 500;
-  color: #1976d2;
+  color: #d2195a; // morado
   margin-bottom: 4px;
   display: block;
 }

@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input, inject } from '@angular/core';
+import { Component, Input, inject, Output, EventEmitter } from '@angular/core';
 import { MatIcon } from '@angular/material/icon';
 import { CoreService } from '../../../services/core.service';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
@@ -16,6 +16,8 @@ export class PreguntasCarouselComponent {
   @Input() respuestasPorPregunta: { [preguntaId: string]: any[] } = {};
   @Input() tema: any = null;
   currentIndex = 0;
+
+  @Output() preguntaRespondida = new EventEmitter<void>();
 
   coreService = inject(CoreService);
 
@@ -43,6 +45,7 @@ export class PreguntasCarouselComponent {
       respuesta._id,
       esCorrecta
     );
+    this.preguntaRespondida.emit();
   }
 
   prevPregunta() {

@@ -40,7 +40,7 @@ export class AppComponent implements OnInit {
   drawerOpened = true;
   navItems = [
     { label: 'Temas y Presentaciones', link: '/temas' },
-    { label: 'Preguntas', link: '/preguntas' },
+    { label: 'Repasar', link: '/preguntas' },
   ];
   user: UsuarioAuth | null = null;
   cacheDatos: any = null;

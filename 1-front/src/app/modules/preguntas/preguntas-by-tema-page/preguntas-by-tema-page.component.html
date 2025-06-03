@@ -1,5 +1,40 @@
+<div class="acciones-modulo">
+  <button class="boton-reset" (click)="resetearModulo()">Resetear módulo</button>
+</div>
 <pregunta-carousel
   [tema]="tema"
   [preguntas]="preguntas"
   [respuestasPorPregunta]="respuestasPorPregunta"
+  (preguntaRespondida)="onPreguntaRespondida()"
 ></pregunta-carousel>
+
+<div class="preguntas-resultados">
+  <div class="preguntas-bien">
+    <h3>Preguntas respondidas correctamente</h3>
+    <div class="pregunta-card bien" *ngFor="let p of preguntasBien">
+      <div class="pregunta-enunciado">{{ p.enunciado }}</div>
+      <div class="respuesta-correcta">
+        <span>Respuesta:</span>
+        <span class="texto">{{ getRespuestaCorrecta(p._id) }}</span>
+      </div>
+    </div>
+  </div>
+  <div class="preguntas-mal">
+    <h3>Preguntas respondidas incorrectamente</h3>
+    <div class="pregunta-card mal" *ngFor="let p of preguntasMal">
+      <div class="pregunta-enunciado">{{ p.enunciado }}</div>
+      <div class="respuesta-correcta">
+        <span>Respuesta correcta:</span>
+        <span class="texto">{{ getRespuestaCorrecta(p._id) }}</span>
+        <button
+          mat-icon-button
+          color="primary"
+          (click)="reintentarPregunta(p._id)"
+          matTooltip="Volver a intentar"
+        >
+          <mat-icon>refresh</mat-icon>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
