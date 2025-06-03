@@ -64,6 +64,8 @@ export class AppComponent implements OnInit {
 
     // Si NO está autenticado, obtener datos cacheados
     if (!this.authService.isLoggedIn()) {
+      console.log('No autenticado, obteniendo datos cacheados');
+
       this.localStorageService.getDatos().subscribe((cache) => {
         this.cacheDatos = cache;
       });

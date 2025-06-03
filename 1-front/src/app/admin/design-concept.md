@@ -17,13 +17,44 @@ Crear una interfaz **ultra intuitiva** y **visualmente atractiva** diseñada esp
 - **Animaciones sutiles** que guían la atención del usuario
 - **Estados claros** para cada acción (loading, success, error)
 - **Confirmaciones visuales** antes de acciones destructivas
-- **Colores semánticos** (verde=éxito, rojo=error, azul=información)
+- **Colores semánticos** (verde=éxito, rojo=error, rosa=principal, rosado/rojo/rose para acentos y fondos)
 
 ### 3. **Consistencia Visual**
-- **Paleta de colores** basada en Angular Material
+- **Paleta de colores** basada en tonos rose, red y pink (ejemplo: #d2195a, #e91e63, #f06292, #ffb6c1)
 - **Espaciado uniforme** (8px, 16px, 24px grid system)
 - **Tipografía consistente** (Roboto en toda la aplicación)
 - **Componentes reutilizables** con comportamiento predecible
+
+## 🎨 Paleta de Colores Principal
+
+- **Primary (Rose/Red/Pink):** #d2195a, #e91e63, #f06292, #ffb6c1
+- **Accent:** Tonos claros de rosa y rosado
+- **Warn/Error:** Rojo intenso
+- **Success:** Verde
+- **Backgrounds:** Gradientes y fondos suaves en rosa/rose
+
+### Ejemplo de uso en SCSS:
+```scss
+$color-primary: #d2195a;
+$color-primary-dark: #b3124b;
+$color-accent: #f06292;
+$color-pink: #e91e63;
+$color-light-pink: #ffb6c1;
+$color-success: #43a047;
+$color-error: #e53935;
+
+body {
+  background: linear-gradient(135deg, #ffd6e0 0%, #fff0f6 100%);
+}
+
+.hero {
+  background: linear-gradient(90deg, $color-primary 60%, #fff 100%);
+}
+
+.mat-toolbar.mat-primary {
+  background: $color-primary;
+}
+```
 
 ## 🎭 Elementos de Diseño Específicos
 

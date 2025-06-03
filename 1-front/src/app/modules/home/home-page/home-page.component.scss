@@ -1,0 +1,100 @@
+:host {
+  display: block;
+}
+
+/* Estilos para el hero y estadísticas */
+.hero {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 3rem;
+  padding: 3.5rem 1rem 2.5rem 1rem;
+  background: linear-gradient(90deg, #d2195a 60%, #fff 100%);
+  border-radius: 2rem;
+  margin-bottom: 2.5rem;
+  flex-wrap: wrap;
+  min-height: 340px;
+  box-shadow: 0 6px 32px 0 rgba(210,25,90,0.10);
+}
+
+.hero-img {
+  width: 420px;
+  max-width: 48vw;
+  min-width: 180px;
+  height: auto;
+  border-radius: 1.5rem;
+  box-shadow: 0 4px 24px 0 rgba(210,25,90,0.10);
+  background: #fff;
+}
+
+.hero-content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2.2rem;
+  max-width: 520px;
+}
+
+.hero-content h1 {
+  font-size: 3.2rem;
+  font-weight: 900;
+  color: #fff;
+  margin: 0;
+  line-height: 1.1;
+  text-shadow: 0 2px 8px rgba(210,25,90,0.10);
+}
+
+.hero-content button {
+  font-size: 1.3rem;
+  padding: 1rem 3rem;
+  border-radius: 2.5rem;
+  font-weight: 700;
+  box-shadow: 0 2px 8px 0 rgba(210,25,90,0.10);
+  background: #fff;
+  color: #d2195a;
+  transition: background 0.2s, color 0.2s;
+}
+.hero-content button:hover {
+  background: #d2195a;
+  color: #fff;
+}
+
+.stats {
+  padding: 2rem 1rem;
+  margin: 0 auto;
+}
+
+.stats-row {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.chart-container {
+  flex: 1;
+  background: #fff;
+  border-radius: 1.2rem;
+  padding: 1.5rem;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.05);
+  min-width: 0;
+}
+
+/* Evita que los gráficos se estiren más de lo necesario */
+.chart-container ngx-charts-bar-vertical-2d,
+.chart-container ngx-charts-line-chart {
+  max-width: 100%;
+  height: 300px;
+}
+
+/* En escritorio: dos gráficos lado a lado, con límite de ancho */
+@media (min-width: 768px) {
+  .stats-row {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+
+  .chart-container {
+    width: 48%;
+  }
+}
