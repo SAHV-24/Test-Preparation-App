@@ -54,6 +54,29 @@ La aplicación será una solución web independiente, con un backend RESTful y u
     * Las respuestas a las preguntas se guardan en el `localStorage` del navegador para evitar que la misma pregunta se muestre nuevamente (por `id`).
     * No tiene acceso a la gestión de contenido.
 
+## 2.4 Obtención de Datos para usuarios Anónimos/Visitantes
+
+Para los usuarios visitantes (no autenticados), la aplicación implementa un mecanismo de obtención de datos públicos (temas, preguntas y respuestas) desde la API, con las siguientes características:
+
+- **Límite de consultas:** Un usuario anónimo puede realizar un máximo de 3 consultas a la API cada 3 días. Este límite se controla mediante el almacenamiento de un contador y la fecha de primer acceso en el `localStorage` del navegador.
+- **Cache local:** Los datos obtenidos se almacenan en el `localStorage` bajo una clave específica. Si el cache es válido (no han pasado más de 2 días desde la última obtención), se usan los datos locales y no se realiza una nueva consulta a la API.
+- **Reinicio automático:** Si han pasado más de 3 días desde el primer acceso, el contador de consultas y el cache se reinician automáticamente, permitiendo nuevas consultas.
+- **Propósito:** Este mecanismo reduce la carga en el backend y permite ofrecer acceso limitado a datos públicos para visitantes, útil para demos, pruebas o planes gratuitos.
+- **Consideración de seguridad:** Este control es solo a nivel frontend y puede ser manipulado por el usuario avanzado. Para mayor seguridad, se recomienda implementar controles similares en el backend.
+- **Restricción de backend:** Las rutas públicas de la API solo permiten peticiones GET y requieren un token JWT público específico en el header Authorization. El backend valida que el token y su payload sean los esperados y rechaza cualquier otro método o token inválido. Solo se exponen datos activos de temas, preguntas y respuestas para visitantes.
+
+**Resumen del flujo:**
+1. Al solicitar datos públicos, se verifica el cache y el contador de consultas en `localStorage`.
+2. Si el cache es válido, se usan los datos locales.
+3. Si no hay cache o se permite una nueva consulta, se obtiene la información de la API y se actualiza el cache y el contador.
+4. Si se supera el límite, se bloquea la consulta hasta que pasen 3 días desde el primer acceso.
+
+Este comportamiento está implementado en el servicio Angular `LocalStorageService` y es fundamental para la experiencia de usuarios anónimos/visitantes.
+
+## 2.5 Estadísticas y Trazabilidad Local para Visitantes
+
+El sistema permite al usuario visitante visualizar su progreso, estadísticas de aciertos/errores por periodo y tema, y la trazabilidad de sus respuestas, todo gestionado localmente en el navegador. Estas métricas pueden ser utilizadas para visualizaciones (por ejemplo, con ngxCharts) y para mejorar la experiencia de aprendizaje personalizada.
+
 ## 3. Requisitos Funcionales
 
 ### 3.1 Autenticación y Autorización
