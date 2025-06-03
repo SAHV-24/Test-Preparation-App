@@ -18,6 +18,9 @@ app.use(express.json());
 
 connectDB();
 
+console.log(process.env)
+
+
 // Rutas protegidas
 app.use('/api/usuarios', usuarioRoutes);
 app.use('/api/auth', authRoutes);
@@ -27,7 +30,8 @@ app.use('/api/respuestas', respuestaRoutes);
 app.use('/api/dashboard', dashboardRoutes);
 app.use('/api/public', publicRoutes);
 
-setupSwagger(app);
+// ! Descomentar esto en desarrollo para habilitar Swagger
+// setupSwagger(app);
 
 // Ruta de prueba
 app.get('/', (req, res) => {

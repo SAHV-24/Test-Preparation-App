@@ -22,27 +22,26 @@ La aplicación será una solución web independiente, con un backend RESTful y u
 
 ### 2.2 Funcionalidades Principales
 
-* Autenticación de usuarios (JWT)
-* Gestión de roles (Admin, Colaborador)
-* CRUD de Colaboradores (solo Admin)
-* CRUD de Temas (Admin y Colaborador)
-* CRUD de Preguntas (Admin y Colaborador)
-* CRUD de Respuestas (asociadas a Preguntas) (Admin y Colaborador)
-* Configuración de preguntas de opción múltiple o verdadero/falso.
-* Ronda de preguntas aleatorias de un tema seleccionado.
-* Dashboard para Admin y Colaborador.
-* Gestión de expiración de colaboradores.
-* Funcionalidad para activar/desactivar colaboradores.
+* Autenticación de usuarios (JWT)[X]
+* Gestión de roles (Admin, Colaborador) [X]
+* CRUD de Colaboradores (solo Admin) [X]
+* CRUD de Temas (Admin y Colaborador) [X]
+* CRUD de Preguntas (Admin y Colaborador) [X]
+* CRUD de Respuestas (asociadas a Preguntas) (Admin y Colaborador) [X]
+* Ronda de preguntas aleatorias de un tema seleccionado. [X]
+* Dashboard para Admin y Colaborador. [X]
+* Gestión de expiración de colaboradores. [X]
+* Funcionalidad para activar/desactivar colaboradores. [X]
 
 ### 2.3 Roles de Usuario
 
 * **Administrador (Admin):**
-    * Gestiona usuarios Colaboradores (CRUD).
-    * Gestiona Temas (CRUD).
-    * Gestiona Preguntas (CRUD).
-    * Gestiona Respuestas (CRUD).
-    * Visualiza métricas generales (número total de Colaboradores, Temas, Preguntas).
-    * Inicia sesión con usuario y contraseña.
+    * Gestiona usuarios Colaboradores (CRUD). [X]
+    * Gestiona Temas (CRUD).[X]
+    * Gestiona Preguntas (CRUD).[X]
+    * Gestiona Respuestas (CRUD). [X]
+    * Visualiza métricas generales (número total de Colaboradores, Temas, Preguntas).[X]
+    * Inicia sesión con usuario y contraseña.[X]
 * **Colaborador:**
     * Gestiona Temas (CRUD).
     * Gestiona Preguntas (CRUD).
