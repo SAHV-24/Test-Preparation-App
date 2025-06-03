@@ -17,6 +17,10 @@ import { MatIcon } from '@angular/material/icon';
 import { MatButton } from '@angular/material/button';
 import { RouterLink } from '@angular/router';
 import { startWith, map } from 'rxjs/operators';
+import { Tema } from '../../../interfaces/tema.interface';
+import { CoreService } from '../../../services/core.service';
+import { PreguntaService } from '../../../services/pregunta.service';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 
 @Component({
   selector: 'app-temas-page',
@@ -36,18 +40,23 @@ import { startWith, map } from 'rxjs/operators';
     MatInputModule,
     MatAutocompleteModule,
     ReactiveFormsModule,
+    MatProgressBarModule,
   ],
   templateUrl: './temas-page.component.html',
   styleUrl: './temas-page.component.scss',
 })
 export class TemasPageComponent implements OnInit {
-  temas: any[] = [];
-  temasFiltrados: any[] = [];
+  temas: Tema[] = [];
+  temasFiltrados: Tema[] = [];
   periodos: number[] = [1, 2, 3];
   filtroPeriodo: number | null = null;
   nombreControl = new FormControl('');
-  opcionesNombre: any[] = [];
+  opcionesNombre: Tema[] = [];
   loading = true;
+  progresoPorTema: { [temaId: string]: number } = {};
+  preguntasPorTema: { [temaId: string]: any[] } = {};
+  coreService = new CoreService();
+  preguntaService = new PreguntaService({} as any); // HttpClient será reemplazado en ngOnInit
 
   constructor(private localStorageService: LocalStorageService) {}
 
@@ -57,6 +66,13 @@ export class TemasPageComponent implements OnInit {
       this.temasFiltrados = [...this.temas];
       this.opcionesNombre = this.temas;
       this.loading = false;
+      // Obtener preguntas por tema
+      if (cache.preguntas) {
+        this.temas.forEach((tema: any) => {
+          this.preguntasPorTema[tema._id] = cache.preguntas.filter((p: any) => p.idTema === tema._id);
+          this.progresoPorTema[tema._id] = this.coreService.getProgresoPorTema(tema._id, this.preguntasPorTema[tema._id]);
+        });
+      }
     });
     this.nombreControl.valueChanges.pipe(startWith('')).subscribe((value) => {
       this.filtrarTemas();

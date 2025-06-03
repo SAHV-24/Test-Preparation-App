@@ -68,6 +68,20 @@
     </mat-card-header>
     <mat-card-content>
       <p class="tema-descripcion">{{ tema.descripcion }}</p>
+      <div
+        class="progreso-bar-tema"
+        *ngIf="tema._id && progresoPorTema[tema._id] !== undefined"
+      >
+        <span class="progreso-label"
+          >Progreso: {{ progresoPorTema[tema._id] }}%</span
+        >
+        <mat-progress-bar
+          mode="determinate"
+          [value]="progresoPorTema[tema._id]"
+          color="accent"
+          style="height: 10px; border-radius: 8px; margin-top: 2px"
+        ></mat-progress-bar>
+      </div>
     </mat-card-content>
     <mat-card-actions class="actions">
       <button
@@ -78,7 +92,9 @@
         Ver Preguntas
       </button>
       <a
-        *ngIf="tema.linkPresentacionUrl.trim().length > 0"
+        *ngIf="
+          tema.linkPresentacionUrl && tema.linkPresentacionUrl.trim().length > 0
+        "
         [href]="tema.linkPresentacionUrl"
         target="_blank"
       >

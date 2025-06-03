@@ -2,13 +2,29 @@
   <div class="estudio-main">
     <div class="estudio-header">
       <h1>Estudio de Preguntas</h1>
-      <p>Explora y estudia preguntas de forma aleatoria. Usa las tarjetas para practicar y repasar tus conocimientos de manera visual y cómoda.</p>
+      <p>
+        Explora y estudia preguntas de forma aleatoria. Usa las tarjetas para
+        practicar y repasar tus conocimientos de manera visual y cómoda.
+      </p>
       <div class="estudio-toolbar">
-        <span class="preguntas-disponibles">Preguntas disponibles: {{ preguntasDisponibles }}</span>
-        <mat-checkbox [(ngModel)]="soloNoRespondidas" (change)="actualizarPreguntasDisponibles()">
-          Solo no respondidas
-        </mat-checkbox>
-        <button mat-stroked-button color="accent" (click)="limpiarSeleccionTemas()">Limpiar selección</button>
+        <span class="preguntas-disponibles"
+          >Preguntas disponibles: {{ preguntasDisponibles
+          }}<mat-checkbox
+            [(ngModel)]="soloNoRespondidas"
+            (change)="actualizarPreguntasDisponibles()"
+          >
+            Solo no respondidas (en <i>Temas y Presentaciones</i>)
+          </mat-checkbox></span
+        >
+
+        <button
+          mat-stroked-button
+          color="accent"
+          class="boton"
+          (click)="limpiarSeleccionTemas()"
+        >
+          Limpiar selección
+        </button>
       </div>
     </div>
     <div class="estudio-card-container">
@@ -19,30 +35,65 @@
         <h2 class="tema-titulo">{{ preguntaActual.temaNombre }}</h2>
         <div class="pregunta-enunciado">{{ preguntaActual.enunciado }}</div>
         <ul class="respuestas-list">
-          <li *ngFor="let r of respuestasActuales">{{ r.textoRespuesta }}</li>
+          <li
+            mat-raised-button
+            color="accent"
+            class="respuesta-boton"
+            (click)="responderPregunta(r)"
+            *ngFor="let r of respuestasActuales"
+          >
+            {{ r.textoRespuesta }}
+            <span *ngIf="respuestaSeleccionada && respuestaSeleccionada === r">
+              <mat-icon *ngIf="r.esLaCorrecta" color="primary"
+                >check_circle</mat-icon
+              >
+              <mat-icon *ngIf="!r.esLaCorrecta" color="warn">cancel</mat-icon>
+              <span
+                [ngClass]="{
+                  correcto: r.esLaCorrecta,
+                  incorrecto: !r.esLaCorrecta
+                }"
+              >
+                {{ r.esLaCorrecta ? "¡Correcto!" : "Incorrecto" }}
+              </span>
+            </span>
+          </li>
         </ul>
-        <button *ngIf="preguntaActual.fotoFormulasUrl" mat-stroked-button color="primary" (click)="abrirFormulaUrl(preguntaActual.fotoFormulasUrl)">
+        <button
+          *ngIf="getFormulaUrl(preguntaActual)"
+          class="boton-negro"
+          (click)="abrirFormulaUrl(getFormulaUrl(preguntaActual))"
+        >
           Ver fórmula
         </button>
-        <div class="estudio-card-actions">
-          <button mat-raised-button color="primary" (click)="mostrarPreguntaAleatoria()">Siguiente pregunta aleatoria</button>
+        <div
+          *ngIf="mostrarImagenFormula"
+          class="formula-modal-backdrop"
+          (click)="cerrarImagenFormula()"
+        >
+          <div class="formula-modal" (click)="$event.stopPropagation()">
+            <img [src]="mostrarImagenFormula" alt="Fórmula" />
+            <button
+              mat-icon-button
+              class="close-btn"
+              (click)="cerrarImagenFormula()"
+            >
+              <mat-icon>close</mat-icon>
+            </button>
+          </div>
         </div>
-        <div *ngIf="mostrarConfetti" class="confetti-canvas">
-          <!-- Aquí puedes poner un canvas o animación de confetti -->
+        <div class="estudio-card-actions">
+          <button class="boton" (click)="mostrarPreguntaAleatoria()">
+            Siguiente pregunta aleatoria
+          </button>
         </div>
       </div>
       <div class="estudio-card empty" *ngIf="!preguntaActual">
         <p>Haz clic en "Pregunta Aleatoria" para comenzar a estudiar.</p>
       </div>
     </div>
-    <div class="estudio-historial" *ngIf="historialPreguntas.length > 0">
-      <h3>Historial de preguntas vistas</h3>
-      <ul>
-        <li *ngFor="let p of historialPreguntas">{{ p.temaNombre }}: {{ p.enunciado }}</li>
-      </ul>
-    </div>
     <div class="estudio-actions">
-      <button mat-raised-button color="primary" (click)="mostrarPreguntaAleatoria()">
+      <button class="boton" (click)="mostrarPreguntaAleatoria()">
         Pregunta Aleatoria
       </button>
     </div>
@@ -51,9 +102,7 @@
     <mat-accordion multi>
       <mat-expansion-panel *ngFor="let periodo of periodos">
         <mat-expansion-panel-header>
-          <mat-panel-title>
-            Corte {{ periodo }}
-          </mat-panel-title>
+          <mat-panel-title> Corte {{ periodo }} </mat-panel-title>
         </mat-expansion-panel-header>
         <ng-container *ngFor="let tema of temasPorPeriodo(periodo)">
           <mat-checkbox

@@ -15,7 +15,6 @@ import { RouterModule } from '@angular/router';
 export class HomePageComponent implements OnInit {
   estadisticas: any[] = [];
   trazabilidad: any[] = [];
-  colorScheme = 'vivid'; // Usa un esquema predefinido de NgxCharts
 
   constructor(
     private localStorage: LocalStorageService,

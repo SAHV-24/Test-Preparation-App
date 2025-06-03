@@ -3,7 +3,9 @@
   <img src="hero.jpg" alt="Estudia activamente" class="hero-img" />
   <div class="hero-content">
     <h1>¡Estudia activamente y mejora cada día!</h1>
-    <button mat-raised-button color="primary" [routerLink]="'/temas'">Empezar</button>
+    <button mat-raised-button color="primary" [routerLink]="'/temas'">
+      Empezar
+    </button>
   </div>
 </section>
 
@@ -11,35 +13,19 @@
 <section class="stats">
   <div class="stats-row scroll-x">
     <div class="chart-container">
-      <div class="chart-title">Tus estadísticas</div>
+      <div class="chart-title"><h1>Tus estadísticas</h1></div>
       <ngx-charts-bar-vertical-2d
         [results]="estadisticas"
-        [scheme]="colorScheme"
+        [scheme]="'flame'"
         [xAxis]="true"
         [yAxis]="true"
-        [legend]="true"
         [showXAxisLabel]="true"
         [showYAxisLabel]="true"
         xAxisLabel="Período"
         yAxisLabel="Preguntas"
-        [animations]="true">
+        [animations]="true"
+      >
       </ngx-charts-bar-vertical-2d>
-    </div>
-    <div class="chart-container timeline">
-      <div class="chart-title">Trazabilidad</div>
-      <ngx-charts-line-chart
-        [results]="trazabilidad"
-        [scheme]="colorScheme"
-        [xAxis]="true"
-        [yAxis]="true"
-        [legend]="false"
-        [showXAxisLabel]="true"
-        [showYAxisLabel]="true"
-        xAxisLabel="Fecha"
-        yAxisLabel="Correcta (1) / Incorrecta (0)"
-        [autoScale]="true"
-        [animations]="true">
-      </ngx-charts-line-chart>
     </div>
   </div>
 </section>

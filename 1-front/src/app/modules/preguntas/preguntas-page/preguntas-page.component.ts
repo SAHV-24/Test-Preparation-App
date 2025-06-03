@@ -1,18 +1,26 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { CoreService } from '../../../services/core.service';
 import { LocalStorageService } from '../../../services/local-storage.service';
 import { CommonModule } from '@angular/common';
 import { MatAccordion, MatExpansionModule } from '@angular/material/expansion';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { FormsModule } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-preguntas-page',
-  imports: [CommonModule, MatExpansionModule, MatCheckboxModule, FormsModule],
+  imports: [
+    CommonModule,
+    MatExpansionModule,
+    MatCheckboxModule,
+    FormsModule,
+    MatIconModule,
+  ],
   templateUrl: './preguntas-page.component.html',
-  styleUrl: './preguntas-page.component.scss'
+  styleUrl: './preguntas-page.component.scss',
 })
-export class PreguntasPageComponent {
+export class PreguntasPageComponent implements OnInit {
   coreService = inject(CoreService);
   localStorageService = inject(LocalStorageService);
   preguntaActual: any = null;
@@ -26,9 +34,13 @@ export class PreguntasPageComponent {
   soloNoRespondidas = false;
   historialPreguntas: any[] = [];
   mostrarConfetti = false;
+  respuestaSeleccionada: any = null;
+  mostrarImagenFormula: string | null = null;
 
-  constructor() {
-    this.localStorageService.getDatos().subscribe(cache => {
+  constructor(private snackBar: MatSnackBar) {}
+
+  ngOnInit() {
+    this.localStorageService.getDatos().subscribe((cache) => {
       this.preguntas = cache.preguntas;
       this.respuestas = cache.respuestas;
       this.temas = cache.temas;
@@ -52,11 +64,15 @@ export class PreguntasPageComponent {
   actualizarPreguntasDisponibles() {
     let preguntasFiltradas = this.preguntas;
     if (this.temasSeleccionados.size > 0) {
-      preguntasFiltradas = preguntasFiltradas.filter(p => this.temasSeleccionados.has(p.idTema));
+      preguntasFiltradas = preguntasFiltradas.filter((p) =>
+        this.temasSeleccionados.has(p.idTema)
+      );
     }
     if (this.soloNoRespondidas) {
       const resueltas = this.coreService.getPreguntasResueltas();
-      preguntasFiltradas = preguntasFiltradas.filter(p => !resueltas.some(r => r.preguntaId === p._id));
+      preguntasFiltradas = preguntasFiltradas.filter(
+        (p) => !resueltas.some((r) => r.preguntaId === p._id)
+      );
     }
     this.preguntasDisponibles = preguntasFiltradas.length;
   }
@@ -64,11 +80,15 @@ export class PreguntasPageComponent {
   mostrarPreguntaAleatoria() {
     let preguntasFiltradas = this.preguntas;
     if (this.temasSeleccionados.size > 0) {
-      preguntasFiltradas = preguntasFiltradas.filter(p => this.temasSeleccionados.has(p.idTema));
+      preguntasFiltradas = preguntasFiltradas.filter((p) =>
+        this.temasSeleccionados.has(p.idTema)
+      );
     }
     if (this.soloNoRespondidas) {
       const resueltas = this.coreService.getPreguntasResueltas();
-      preguntasFiltradas = preguntasFiltradas.filter(p => !resueltas.some(r => r.preguntaId === p._id));
+      preguntasFiltradas = preguntasFiltradas.filter(
+        (p) => !resueltas.some((r) => r.preguntaId === p._id)
+      );
     }
     this.preguntasDisponibles = preguntasFiltradas.length;
     if (!preguntasFiltradas.length) {
@@ -80,25 +100,47 @@ export class PreguntasPageComponent {
     const pregunta = preguntasFiltradas[randomIndex];
     this.preguntaActual = {
       ...pregunta,
-      temaNombre: this.temas.find(t => t._id === pregunta.idTema)?.nombre || '',
-      periodo: this.temas.find(t => t._id === pregunta.idTema)?.periodo || ''
+      temaNombre:
+        this.temas.find((t) => t._id === pregunta.idTema)?.nombre || '',
+      periodo: this.temas.find((t) => t._id === pregunta.idTema)?.periodo || '',
     };
-    this.respuestasActuales = this.respuestas.filter(r => r.idPregunta === pregunta._id);
+    this.respuestasActuales = this.respuestas.filter(
+      (r) => r.idPregunta === pregunta._id
+    );
     this.historialPreguntas.push(this.preguntaActual);
     // Confetti si acierta 5 seguidas o completa todas
     if (this.historialPreguntas.length > 0 && this.preguntasDisponibles === 1) {
       this.mostrarConfetti = true;
-      setTimeout(() => this.mostrarConfetti = false, 2000);
+      setTimeout(() => (this.mostrarConfetti = false), 2000);
     }
+    this.respuestaSeleccionada = null; // Permite responder la siguiente pregunta
   }
 
   temasPorPeriodo(periodo: number) {
-    return this.temas.filter(t => t.periodo === periodo);
+    return this.temas.filter((t) => t.periodo === periodo);
   }
 
   abrirFormulaUrl(url: string) {
     if (url) {
-      window.open(url, '_blank');
+      this.mostrarImagenFormula = url;
+    }
+  }
+
+  cerrarImagenFormula() {
+    this.mostrarImagenFormula = null;
+  }
+
+  getFormulaUrl(pregunta: any) {
+    const tema = this.temas.find((t) => t._id === pregunta.idTema);
+    return tema?.fotoFormulasUrl || '';
+  }
+
+  responderPregunta(respuesta: any) {
+    this.respuestaSeleccionada = respuesta;
+    if (respuesta.esLaCorrecta) {
+      this.snackBar.open('¡Respuesta correcta!', 'Cerrar', { duration: 3000 });
+    } else {
+      this.snackBar.open('Respuesta incorrecta', 'Cerrar', { duration: 3000 });
     }
   }
 }
