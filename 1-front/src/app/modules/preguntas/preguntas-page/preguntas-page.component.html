@@ -1,1 +1,69 @@
-<p>preguntas-page works!</p>
+<div class="estudio-layout">
+  <div class="estudio-main">
+    <div class="estudio-header">
+      <h1>Estudio de Preguntas</h1>
+      <p>Explora y estudia preguntas de forma aleatoria. Usa las tarjetas para practicar y repasar tus conocimientos de manera visual y cómoda.</p>
+      <div class="estudio-toolbar">
+        <span class="preguntas-disponibles">Preguntas disponibles: {{ preguntasDisponibles }}</span>
+        <mat-checkbox [(ngModel)]="soloNoRespondidas" (change)="actualizarPreguntasDisponibles()">
+          Solo no respondidas
+        </mat-checkbox>
+        <button mat-stroked-button color="accent" (click)="limpiarSeleccionTemas()">Limpiar selección</button>
+      </div>
+    </div>
+    <div class="estudio-card-container">
+      <div class="estudio-card" *ngIf="preguntaActual">
+        <div class="tema-badge">
+          <span class="badge">Corte {{ preguntaActual.periodo }}</span>
+        </div>
+        <h2 class="tema-titulo">{{ preguntaActual.temaNombre }}</h2>
+        <div class="pregunta-enunciado">{{ preguntaActual.enunciado }}</div>
+        <ul class="respuestas-list">
+          <li *ngFor="let r of respuestasActuales">{{ r.textoRespuesta }}</li>
+        </ul>
+        <button *ngIf="preguntaActual.fotoFormulasUrl" mat-stroked-button color="primary" (click)="abrirFormulaUrl(preguntaActual.fotoFormulasUrl)">
+          Ver fórmula
+        </button>
+        <div class="estudio-card-actions">
+          <button mat-raised-button color="primary" (click)="mostrarPreguntaAleatoria()">Siguiente pregunta aleatoria</button>
+        </div>
+        <div *ngIf="mostrarConfetti" class="confetti-canvas">
+          <!-- Aquí puedes poner un canvas o animación de confetti -->
+        </div>
+      </div>
+      <div class="estudio-card empty" *ngIf="!preguntaActual">
+        <p>Haz clic en "Pregunta Aleatoria" para comenzar a estudiar.</p>
+      </div>
+    </div>
+    <div class="estudio-historial" *ngIf="historialPreguntas.length > 0">
+      <h3>Historial de preguntas vistas</h3>
+      <ul>
+        <li *ngFor="let p of historialPreguntas">{{ p.temaNombre }}: {{ p.enunciado }}</li>
+      </ul>
+    </div>
+    <div class="estudio-actions">
+      <button mat-raised-button color="primary" (click)="mostrarPreguntaAleatoria()">
+        Pregunta Aleatoria
+      </button>
+    </div>
+  </div>
+  <aside class="estudio-menu">
+    <mat-accordion multi>
+      <mat-expansion-panel *ngFor="let periodo of periodos">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            Corte {{ periodo }}
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <ng-container *ngFor="let tema of temasPorPeriodo(periodo)">
+          <mat-checkbox
+            [checked]="temasSeleccionados.has(tema._id)"
+            (change)="toggleTemaSeleccionado(tema._id, $event.checked)"
+          >
+            {{ tema.nombre }}
+          </mat-checkbox>
+        </ng-container>
+      </mat-expansion-panel>
+    </mat-accordion>
+  </aside>
+</div>
