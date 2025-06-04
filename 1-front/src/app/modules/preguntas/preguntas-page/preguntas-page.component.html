@@ -34,11 +34,21 @@
         </div>
         <h2 class="tema-titulo">{{ preguntaActual.temaNombre }}</h2>
         <div class="pregunta-enunciado">{{ preguntaActual.enunciado }}</div>
+        <img
+          *ngIf="preguntaActual.fotoUri"
+          [src]="preguntaActual.fotoUri"
+          alt="Imagen de la pregunta"
+          class="pregunta-imagen"
+        />
         <ul class="respuestas-list">
           <li
             mat-raised-button
             color="accent"
             class="respuesta-boton"
+            [class.seleccionable]="!respuestaSeleccionada"
+            [class.respondida]="respuestaSeleccionada && respuestaSeleccionada === r"
+            [class.correcta]="respuestaSeleccionada && respuestaSeleccionada === r && r.esLaCorrecta"
+            [class.incorrecta]="respuestaSeleccionada && respuestaSeleccionada === r && !r.esLaCorrecta"
             (click)="responderPregunta(r)"
             *ngFor="let r of respuestasActuales"
           >

@@ -7,6 +7,10 @@
       <h2 class="tema-titulo">{{ tema.nombre }}</h2>
       <h3 class="pregunta-enunciado">Pregunta {{ currentIndex + 1 }} de {{ preguntasNoResueltas.length }}</h3>
       <p class="pregunta-texto">{{ preguntasNoResueltas[currentIndex].enunciado }}</p>
+      <img *ngIf="preguntasNoResueltas[currentIndex].fotoUri" 
+           [src]="preguntasNoResueltas[currentIndex].fotoUri" 
+           alt="Imagen de la pregunta" 
+           class="pregunta-imagen" />
       <ul class="respuestas-list">
         <li *ngFor="let r of respuestasPorPregunta[preguntasNoResueltas[currentIndex]._id]"
             [class.respondida]="resultadoActual && resultadoActual.respuestaId === r._id"
@@ -42,3 +46,19 @@
     </div>
   </div>
 </ng-template>
+
+<style>
+.pregunta-imagen {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 0.5em auto;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+@media (max-width: 600px) {
+  .pregunta-imagen {
+    max-width: 95vw;
+  }
+}
+</style>

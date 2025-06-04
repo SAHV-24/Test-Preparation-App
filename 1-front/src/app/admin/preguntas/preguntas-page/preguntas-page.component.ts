@@ -71,6 +71,12 @@ export class PreguntasPageComponent {
     this.respuestasPorPregunta = {};
     this.preguntaService.getByTema(idTema).subscribe({
       next: (preguntas) => {
+        // Ordenar por fecha de actualización descendente (solo updatedAt y createdAt)
+        preguntas.sort((a, b) => {
+          const fechaA = new Date(a.updatedAt || a.createdAt || 0).getTime();
+          const fechaB = new Date(b.updatedAt || b.createdAt || 0).getTime();
+          return fechaB - fechaA;
+        });
         this.preguntas = preguntas;
         this.preguntasFiltradas = preguntas;
         preguntas.forEach((pregunta) => {

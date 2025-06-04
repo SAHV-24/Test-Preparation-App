@@ -1,17 +1,36 @@
 <div class="respuestas-list">
   <h4>Respuestas</h4>
-  <button mat-mini-fab color="accent" (click)="agregarRespuesta()" matTooltip="Agregar respuesta">
+  <button
+    mat-mini-fab
+    color="accent"
+    (click)="agregarRespuesta()"
+    matTooltip="Agregar respuesta"
+  >
     <mat-icon>add</mat-icon>
   </button>
-  <div *ngIf="respuestas.length === 0" class="empty-state">No hay respuestas.</div>
+  <div *ngIf="respuestas.length === 0" class="empty-state">
+    No hay respuestas.
+  </div>
   <ul *ngIf="respuestas.length > 0">
     <li *ngFor="let respuesta of respuestas" class="respuesta-item">
-      <span>{{ respuesta.textoRespuesta }}</span>
-      <span *ngIf="respuesta.esLaCorrecta" class="correcta"><mat-icon color="primary">check_circle</mat-icon></span>
-      <button mat-icon-button color="primary" (click)="editarRespuesta(respuesta)" matTooltip="Editar">
+      <span>{{ respuesta.textoRespuesta | slice : 0 : 30 }}...</span>
+      <span *ngIf="respuesta.esLaCorrecta" class="correcta"
+        ><mat-icon color="primary">check_circle</mat-icon></span
+      >
+      <button
+        mat-icon-button
+        color="primary"
+        (click)="editarRespuesta(respuesta)"
+        matTooltip="Editar"
+      >
         <mat-icon>edit</mat-icon>
       </button>
-      <button mat-icon-button color="warn" (click)="eliminarRespuesta(respuesta)" matTooltip="Eliminar">
+      <button
+        mat-icon-button
+        color="warn"
+        (click)="eliminarRespuesta(respuesta)"
+        matTooltip="Eliminar"
+      >
         <mat-icon>delete</mat-icon>
       </button>
     </li>

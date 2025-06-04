@@ -3,13 +3,14 @@
     mat-icon-button
     (click)="drawer?.toggle()"
     *ngIf="authService.isAdminOrColaborador() && authService.isLoggedIn()"
+    class="admin-menu-btn pulse-animation"
+    matTooltip="Panel de Administración"
+    aria-label="Abrir menú de administración"
   >
-    <mat-icon>menu</mat-icon>
+<mat-icon class="admin-icon" style="color: #d2195a">menu</mat-icon>
   </button>
 
-  <span
-    class="navbar-title special-title cursor-pointer"
-    [routerLink]="['/']"
+  <span class="navbar-title special-title cursor-pointer" [routerLink]="['/']"
     >FyEvP</span
   >
 

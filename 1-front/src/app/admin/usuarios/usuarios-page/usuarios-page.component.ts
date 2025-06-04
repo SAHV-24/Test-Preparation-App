@@ -17,6 +17,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { UsuarioService } from '../../../services/usuario.service';
 import { Usuario } from '../../../interfaces/usuario.interface';
+import { debounceTime, Subject } from 'rxjs';
 
 @Component({
   selector: 'app-usuarios-page',
@@ -50,6 +51,9 @@ export class UsuariosPageComponent implements OnInit {
   
   userForm: FormGroup;
   roles = ['Admin', 'Colaborador'];
+  filtroNombre: string = '';
+  usuariosFiltrados: Usuario[] = [];
+  private filtroNombreChanged = new Subject<string>();
 
   constructor(
     private usuarioService: UsuarioService,
@@ -67,6 +71,9 @@ export class UsuariosPageComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadUsuarios();
+    this.filtroNombreChanged.pipe(debounceTime(300)).subscribe(() => {
+      this.filtrarUsuarios();
+    });
   }
 
   loadUsuarios(): void {
@@ -74,6 +81,7 @@ export class UsuariosPageComponent implements OnInit {
     this.usuarioService.getAll().subscribe({
       next: (usuarios) => {
         this.usuarios = usuarios;
+        this.filtrarUsuarios();
         this.isLoading = false;
       },
       error: (error) => {
@@ -81,6 +89,17 @@ export class UsuariosPageComponent implements OnInit {
         this.isLoading = false;
       }
     });
+  }
+
+  filtrarUsuarios(): void {
+    const filtro = this.filtroNombre.trim().toLowerCase();
+    if (!filtro) {
+      this.usuariosFiltrados = this.usuarios;
+    } else {
+      this.usuariosFiltrados = this.usuarios.filter(u =>
+        u.nombreCompleto.toLowerCase().includes(filtro)
+      );
+    }
   }
 
   openForm(user?: Usuario): void {
@@ -187,5 +206,10 @@ export class UsuariosPageComponent implements OnInit {
       duration: 3000,
       panelClass: type === 'success' ? 'success-snackbar' : 'error-snackbar'
     });
+  }
+
+  // Nuevo método para el input
+  onFiltroNombreChange(value: string) {
+    this.filtroNombreChanged.next(value);
   }
 }
