@@ -1,5 +1,13 @@
 # Aplicación para Preparación de Exámenes (orientado a Formulación y Evaluación de Proyectos)
 
+## DEMO
+![Página de Inicio](https://i.imgur.com/H12AlsX.png)
+![Preguntas Aleatorias para cada Estudiante](https://i.imgur.com/qsvql13.png)
+![Gestión de Preguntas del Admin](https://i.imgur.com/ZzdE6Ew.png)
+
+El DEMO de esta aplicación puede verse en el siguiente URL: https://fyevp.netlify.app/preguntas
+
+
 ## 🎯 Propósito
 Aplicación web para gestionar temas, preguntas y respuestas con roles diferenciados (Admin, Colaborador) y un modo de juego para visitantes.
 
