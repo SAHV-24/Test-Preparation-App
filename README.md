@@ -30,7 +30,7 @@ Desarrolladores, diseñadores, testers y stakeholders.
 ### Visitante
 - Juego de preguntas aleatorias (sin login)
 - Datos guardados en `localStorage`
-- Acceso limitado y cacheado a API (máx. 3 consultas cada 3 días)
+- Acceso limitado y cacheado a API (máx. 3 consultas cada 2 días)
 
 ## 🔄 Flujo Visitante
 1. Consulta cache y contador en `localStorage`
