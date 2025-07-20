@@ -5,7 +5,7 @@
 ![Preguntas Aleatorias para cada Estudiante](https://i.imgur.com/qsvql13.png)
 ![Gestión de Preguntas del Admin](https://i.imgur.com/ZzdE6Ew.png)
 
-El DEMO de esta aplicación puede verse en el siguiente URL: https://fyevp.netlify.app/preguntas
+El DEMO de esta aplicación puede verse en el siguiente URL: https://fyevp.netlify.app
 
 
 ## 🎯 Propósito
